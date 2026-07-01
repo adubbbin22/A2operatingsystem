@@ -1,0 +1,57 @@
+{
+  "//": "MCP wiring for the A2 Operating System. Secrets come from .env (gitignored) via ${VAR} refs. Comment out any server you haven't set up yet so /mcp stays green. Some commands/URLs may change per server version — check each server's README.",
+  "mcpServers": {
+    "nano-banana": {
+      "command": "npx",
+      "args": ["-y", "nano-banana-pro-mcp"],
+      "env": { "GEMINI_API_KEY": "${GEMINI_API_KEY}" }
+    },
+    "meta-ads": {
+      "type": "http",
+      "url": "https://meta-ads.mcp.pipeboard.co/",
+      "headers": { "Authorization": "Bearer ${PIPEBOARD_TOKEN}" }
+    },
+    "revenuecat": {
+      "type": "http",
+      "url": "https://mcp.revenuecat.ai/mcp",
+      "headers": { "Authorization": "Bearer ${REVENUECAT_V2_SECRET_KEY}" }
+    },
+    "apple-ads": {
+      "command": "npx",
+      "args": ["-y", "apple-ads-mcp"],
+      "env": {
+        "APPLE_ADS_CLIENT_ID": "${APPLE_ADS_CLIENT_ID}",
+        "APPLE_ADS_TEAM_ID": "${APPLE_ADS_TEAM_ID}",
+        "APPLE_ADS_KEY_ID": "${APPLE_ADS_KEY_ID}",
+        "APPLE_ADS_PRIVATE_KEY": "${APPLE_ADS_PRIVATE_KEY}"
+      }
+    },
+    "app-store-connect": {
+      "command": "npx",
+      "args": ["-y", "@joshuarileydev/app-store-connect-mcp-server"],
+      "env": {
+        "APP_STORE_CONNECT_KEY_ID": "${ASC_KEY_ID}",
+        "APP_STORE_CONNECT_ISSUER_ID": "${ASC_ISSUER_ID}",
+        "APP_STORE_CONNECT_PRIVATE_KEY_PATH": "${ASC_PRIVATE_KEY_PATH}"
+      }
+    },
+    "google-ads": {
+      "command": "npx",
+      "args": ["-y", "google-ads-mcp-server"],
+      "env": {
+        "GOOGLE_ADS_DEVELOPER_TOKEN": "${GOOGLE_ADS_DEVELOPER_TOKEN}",
+        "GOOGLE_ADS_CLIENT_ID": "${GOOGLE_ADS_CLIENT_ID}",
+        "GOOGLE_ADS_CLIENT_SECRET": "${GOOGLE_ADS_CLIENT_SECRET}",
+        "GOOGLE_ADS_REFRESH_TOKEN": "${GOOGLE_ADS_REFRESH_TOKEN}",
+        "GOOGLE_ADS_LOGIN_CUSTOMER_ID": "${GOOGLE_ADS_LOGIN_CUSTOMER_ID}"
+      }
+    },
+    "play-console": {
+      "command": "npx",
+      "args": ["-y", "play-store-mcp"],
+      "env": {
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON": "${GOOGLE_PLAY_SERVICE_ACCOUNT_JSON}"
+      }
+    }
+  }
+}

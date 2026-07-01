@@ -1,0 +1,16 @@
+# Secrets — never commit
+.env
+secrets/
+*.p8
+*service-account*.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated ad images are large; keep records (uploaded/) but ignore raw gen output by default.
+# Delete the next line if you want to version the generated concepts too.
+creatives/generated/**/*.png
+creatives/generated/**/*.jpg
