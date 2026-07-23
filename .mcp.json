@@ -52,6 +52,13 @@
       "env": {
         "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON": "${GOOGLE_PLAY_SERVICE_ACCOUNT_JSON}"
       }
+    },
+    "bigquery": {
+      "command": "npx",
+      "args": ["-y", "@ergut/mcp-bigquery-server", "--project-id", "${BIGQUERY_PROJECT_ID}"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}"
+      }
     }
   }
 }

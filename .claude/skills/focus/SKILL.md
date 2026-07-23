@@ -38,7 +38,14 @@ Sources that work **today** (no user setup):
 
 Blocked until the user provides keys (tracked as userAction tickets):
 - RevenueCat (`REVENUECAT_V2_SECRET_KEY` in .env) → real revenue/MRR/churn.
-- Firebase/BigQuery service account → DAU/retention for the store apps.
+- **Firebase**: no metrics API exists — the supported path is the per-project BigQuery
+  export + a service account (`BIGQUERY_PROJECT_ID` + `GOOGLE_APPLICATION_CREDENTIALS`
+  in .env; a `bigquery` MCP server is already wired in .mcp.json). Once connected, the
+  standard pull per app dataset (`analytics_<id>.events_*`) is: DAU = distinct
+  `user_pseudo_id` on yesterday's partition; installs = `first_open` count 7d; D1
+  retention = cohort join of `first_open` day N vs active day N+1. Note the Firebase
+  projects likely live under a different Google account (Drive suggests
+  awagnertrugman@gmail.com), not a2.apps23.
 - ASC / Play Console / ad platforms (.env keys per .env.example).
 
 After a pull: write results into each app's `metrics`, bump `updated`, commit, push.
