@@ -22,6 +22,9 @@ Talk to Claude Code in plain language, or invoke a skill:
 | `ship-log` | Reconcile released versions from App Store Connect + Play Console into each `changelog.md`. |
 | `focus` | Pull Goals + Projects + Roadmap + Epics from Notion → ranked "do next" dashboard in `dashboards/focus/`. |
 
+The focus dashboard also exists as a standalone **website** (live Notion + GitHub data,
+password-protected): see [`focus-site/`](./focus-site/) for the code and 10-minute deploy.
+
 ## Safety
 Ads are created **paused**; releases and metadata publish only on explicit confirmation.
 Budget/bid changes are read back before → after before executing. Secrets stay in `.env`.

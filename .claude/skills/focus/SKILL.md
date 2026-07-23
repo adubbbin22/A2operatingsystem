@@ -55,6 +55,13 @@ Hub page: `337c5951-aa52-81c2-a1f1-fef4e17ca29d`. Query each data source **separ
    money-vs-effort table, WIP count, hygiene checklist. Optionally also render an
    HTML version alongside if the user wants a visual dashboard.
 
+## Live dashboard (website)
+
+The standalone website lives in `focus-site/` (Cloudflare Pages: static page + Functions
+proxying Notion/GitHub server-side with secrets; password-gated). Deploy/redeploy steps
+are in `focus-site/README.md`. When changing dashboard logic, keep `focus-site/public/index.html`
+and the artifact source below in sync — same ranking rules, different data layer.
+
 ## Live dashboard (artifact)
 
 A live, interactive version exists as a Claude artifact:
