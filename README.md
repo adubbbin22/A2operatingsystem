@@ -20,6 +20,7 @@ Talk to Claude Code in plain language, or invoke a skill:
 | `new-ad` | Brief → nano-banana generates concepts → edit → upload to Meta as a **paused** ad → log it. |
 | `weekly-review` | Pull Meta + Apple + Google + RevenueCat → one dated report in `dashboards/`. |
 | `ship-log` | Reconcile released versions from App Store Connect + Play Console into each `changelog.md`. |
+| `focus` | Pull Goals + Projects + Roadmap + Epics from Notion → ranked "do next" dashboard in `dashboards/focus/`. |
 
 ## Safety
 Ads are created **paused**; releases and metadata publish only on explicit confirmation.

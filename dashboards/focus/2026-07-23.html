@@ -1,0 +1,370 @@
+<title>A2 Focus — what to do next</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --card: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-3: #898781;
+    --line: #e1e0d9;
+    --ring: rgba(11,11,11,0.10);
+    --accent: #2a78d6;          /* magnitude / revenue */
+    --accent-soft: #cde2fb;
+    --effort: #eb6834;          /* second measure / effort */
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --good-text: #006300;
+    --critical-tint: rgba(208,59,59,0.08);
+    --serious-tint: rgba(236,131,90,0.10);
+    --track: #eeede8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --card: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --ink-3: #898781;
+      --line: #2c2c2a;
+      --ring: rgba(255,255,255,0.10);
+      --accent: #3987e5;
+      --accent-soft: #184f95;
+      --effort: #d95926;
+      --good-text: #0ca30c;
+      --critical-tint: rgba(208,59,59,0.14);
+      --serious-tint: rgba(236,131,90,0.14);
+      --track: #262625;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --card: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-3: #898781;
+    --line: #2c2c2a;
+    --ring: rgba(255,255,255,0.10);
+    --accent: #3987e5;
+    --accent-soft: #184f95;
+    --effort: #d95926;
+    --good-text: #0ca30c;
+    --critical-tint: rgba(208,59,59,0.14);
+    --serious-tint: rgba(236,131,90,0.14);
+    --track: #262625;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --card: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-3: #898781;
+    --line: #e1e0d9;
+    --ring: rgba(11,11,11,0.10);
+    --accent: #2a78d6;
+    --accent-soft: #cde2fb;
+    --effort: #eb6834;
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --good-text: #006300;
+    --critical-tint: rgba(208,59,59,0.08);
+    --serious-tint: rgba(236,131,90,0.10);
+    --track: #eeede8;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 64px; }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 6px;
+  }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 4px; text-wrap: balance; }
+  .sub { color: var(--ink-2); margin: 0; font-size: 14px; }
+  .sub a { color: var(--ink-2); }
+
+  section { margin-top: 36px; }
+  h2 { font-size: 16px; margin: 0 0 4px; }
+  .h2-note { font-size: 13px; color: var(--ink-2); margin: 0 0 14px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--ring);
+    border-radius: 8px;
+  }
+
+  /* ---- hero: the one thing ---- */
+  .hero { padding: 22px 24px; border-left: 4px solid var(--critical); }
+  .hero .eyebrow { color: var(--critical); }
+  .hero h3 { font-size: 20px; margin: 2px 0 8px; line-height: 1.3; text-wrap: balance; }
+  .hero p { margin: 0; color: var(--ink-2); max-width: 62ch; }
+  .hero .why { margin-top: 10px; font-size: 13px; }
+  .hero a.open { font-size: 13px; color: var(--accent); font-weight: 600; text-decoration: none; }
+  .hero a.open:hover, .hero a.open:focus-visible { text-decoration: underline; }
+
+  /* ---- goal tiles ---- */
+  .goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px) { .goals { grid-template-columns: 1fr; } }
+  .goal { padding: 16px 18px; }
+  .goal .name { font-size: 13px; font-weight: 600; margin: 0 0 10px; }
+  .goal .fig { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .goal .fig small { font-size: 14px; font-weight: 500; color: var(--ink-3); }
+  .meter { height: 5px; border-radius: 3px; background: var(--track); margin: 12px 0 10px; overflow: hidden; }
+  .meter i { display: block; height: 100%; border-radius: 3px; }
+  .goal .foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+    padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+  }
+  .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .pill.good     { color: var(--good-text); background: rgba(12,163,12,0.10); }
+  .pill.serious  { color: var(--serious);   background: var(--serious-tint); }
+  .pill.critical { color: var(--critical);  background: var(--critical-tint); }
+  .goal .flag { font-size: 12px; color: var(--ink-3); margin-top: 8px; }
+
+  /* ---- do-next queue ---- */
+  .queue { padding: 4px 0; }
+  .qrow {
+    display: grid; grid-template-columns: 40px 1fr auto; gap: 12px;
+    padding: 13px 18px; border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .qrow:first-child { border-top: 0; }
+  .qrow:hover { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .qrow .rank {
+    font-size: 17px; font-weight: 700; color: var(--ink-3);
+    font-variant-numeric: tabular-nums; text-align: right;
+  }
+  .qrow.now .rank { color: var(--critical); }
+  .qrow .t { font-weight: 600; }
+  .qrow .t a { text-decoration: none; }
+  .qrow .t a:hover, .qrow .t a:focus-visible { text-decoration: underline; }
+  .qrow .d { font-size: 13px; color: var(--ink-2); margin-top: 2px; max-width: 66ch; }
+  .chips { display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+  .chip {
+    font-size: 11px; font-weight: 700; padding: 1px 7px;
+    border-radius: 4px; border: 1px solid var(--line); color: var(--ink-2);
+  }
+  .chip.p0 { color: #fff; background: var(--critical); border-color: var(--critical); }
+  .chip.app { font-weight: 600; }
+  .unblock { border-top: 1px dashed var(--line); background: var(--serious-tint); }
+  .unblock .rank { font-size: 13px; font-weight: 700; color: var(--serious); }
+  @media (max-width: 640px) {
+    .qrow { grid-template-columns: 28px 1fr; }
+    .chips { grid-column: 2; margin-top: 4px; }
+  }
+
+  /* ---- money vs effort ---- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+  .panel { padding: 16px 18px; }
+  .panel h3 { font-size: 13px; font-weight: 600; margin: 0 0 2px; }
+  .panel .note { font-size: 12px; color: var(--ink-3); margin: 0 0 14px; }
+  .brow { display: grid; grid-template-columns: 118px 1fr 58px; gap: 10px; align-items: center; padding: 5px 0; }
+  .brow:hover { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .brow .lbl { font-size: 12.5px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .brow .bar { height: 14px; border-radius: 0 4px 4px 0; min-width: 2px; }
+  .brow .bar.rev { background: var(--accent); }
+  .brow .bar.eff { background: var(--effort); }
+  .brow .bar.zero { background: transparent; border-left: 2px solid var(--ink-3); height: 14px; border-radius: 0; }
+  .brow .val { font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
+  .takeaway {
+    margin-top: 14px; padding: 12px 18px 12px 14px;
+    border-left: 3px solid var(--effort);
+    font-size: 13px; color: var(--ink-2); max-width: 72ch;
+  }
+  .takeaway strong { color: var(--ink); }
+
+  /* ---- wip banner ---- */
+  .wip { display: flex; gap: 18px; align-items: center; padding: 16px 20px; flex-wrap: wrap; }
+  .wip .big { font-size: 30px; font-weight: 700; line-height: 1; color: var(--serious); }
+  .wip .txt { font-size: 13px; color: var(--ink-2); max-width: 58ch; }
+  .wip .txt strong { color: var(--ink); }
+
+  /* ---- hygiene ---- */
+  .fixes { padding: 6px 0; }
+  .fix { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 10px 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
+  .fix:first-child { border-top: 0; }
+  .fix .ico { color: var(--serious); font-weight: 700; text-align: center; }
+  .fix strong { color: var(--ink); font-weight: 600; }
+
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-3); }
+  footer p { margin: 4px 0; max-width: 78ch; }
+  code { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; background: color-mix(in srgb, var(--ink) 6%, transparent); padding: 1px 5px; border-radius: 4px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .meter i { transition: width .5s ease; }
+  }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">A2 Operating System · Focus</p>
+    <h1>What matters today</h1>
+    <p class="sub">Wednesday, July 23, 2026 · from your Notion <a href="https://app.notion.com/p/337c5951aa5281c2a1f1fef4e17ca29d">App Command Center</a> — Goals, Projects, Roadmap &amp; Epics</p>
+  </header>
+
+  <section>
+    <div class="card hero">
+      <p class="eyebrow">Do this first</p>
+      <h3><a class="open" style="font-size:20px" href="https://app.notion.com/3a5c5951aa5281fa9c8bfd69a442c827">Fix the HealthKit date-filter bug in Second Strength</a></h3>
+      <p>Yesterday-steps is showing a lifetime total (~260k) because date filters are silently ignored in <code>getTodayActivity()</code>. Every health screen you're about to ship renders wrong numbers.</p>
+      <p class="why"><strong>Why it's #1:</strong> it's a P0 bug already in flight, and it gates the Second Strength release that 11 other in-progress items are stacked behind. Nothing else you finish today ships until this is right.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals</h2>
+    <p class="h2-note">The portfolio's three commitments, all due December 31, 2026.</p>
+    <div class="goals">
+      <div class="card goal">
+        <p class="name">$100K / month revenue</p>
+        <div class="fig">$40K <small>of $100K</small></div>
+        <div class="meter"><i style="width:40%; background: var(--critical);"></i></div>
+        <div class="foot"><span>$60K gap · 5 months left</span><span class="pill critical">▲ At Risk</span></div>
+        <p class="flag">Stated primary lever: the P0 Subscription &amp; Monetization epic.</p>
+      </div>
+      <div class="card goal">
+        <p class="name">AO3 → 30K daily active users</p>
+        <div class="fig">17K <small>of 30K</small></div>
+        <div class="meter"><i style="width:57%; background: var(--good);"></i></div>
+        <div class="foot"><span>57% there</span><span class="pill good">● On Track</span></div>
+      </div>
+      <div class="card goal">
+        <p class="name">Second Strength → 1,000 downloads/day</p>
+        <div class="fig">1,000 <small>of 1,000</small></div>
+        <div class="meter"><i style="width:100%; background: var(--serious);"></i></div>
+        <div class="foot"><span>Current equals target</span><span class="pill serious">◆ Behind</span></div>
+        <p class="flag">⚠ Data looks stale — status says Behind while current = target. Update one of them in Notion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Do next — the P0 lane</h2>
+    <p class="h2-note">Ranked queue. Finish the four in flight before starting the three below them; everything P1 waits until this lane is empty.</p>
+    <div class="card queue">
+      <div class="qrow now">
+        <span class="rank">1</span>
+        <span><span class="t"><a href="https://app.notion.com/3a5c5951aa5281fa9c8bfd69a442c827">HealthKit date filters silently ignored</a></span>
+        <div class="d">The bug above — corrupts every health metric on screen. Gates the SS ship.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">Bug · In&nbsp;progress</span><span class="chip app">Second Strength</span></span>
+      </div>
+      <div class="qrow now">
+        <span class="rank">2</span>
+        <span><span class="t"><a href="https://app.notion.com/383c5951aa5280ca8355e206585cd11c">AO3 price testing (iOS)</a></span>
+        <div class="d">The most direct lever on the $60K/mo gap — the P0 monetization epic names pricing tests as the primary play.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">In&nbsp;progress</span><span class="chip app">AO3</span></span>
+      </div>
+      <div class="qrow now">
+        <span class="rank">3</span>
+        <span><span class="t"><a href="https://app.notion.com/3a5c5951aa52810b9324cdfe4747757f">Unify RevenueCat identity: web trial unlocks the app</a></span>
+        <div class="d">A broken web→app purchase path is paid conversions leaking out at the last step.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">In&nbsp;progress</span><span class="chip app">Second Strength</span></span>
+      </div>
+      <div class="qrow now">
+        <span class="rank">4</span>
+        <span><span class="t"><a href="https://app.notion.com/3a5c5951aa52817da364df5c63c6b162">Apple Health round 2 — HRV, sleep stages, workout close</a></span>
+        <div class="d">Last P0 feature in the SS release train. Close it out, then the release can cut.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">In&nbsp;progress</span><span class="chip app">Second Strength</span></span>
+      </div>
+      <div class="qrow">
+        <span class="rank">5</span>
+        <span><span class="t"><a href="https://app.notion.com/37ac5951aa5280af8277e04ffe8756f7">AO3 — new App Store screenshots</a></span>
+        <div class="d">Next up once a slot frees: P0 under the Profitable User Acquisition epic, and it's been sitting since June 9.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">To&nbsp;do</span><span class="chip app">AO3</span></span>
+      </div>
+      <div class="qrow">
+        <span class="rank">6</span>
+        <span><span class="t"><a href="https://app.notion.com/384c5951aa5281ee9860d8be81365ab1">AO3 — instrument onboarding + home feed (D1 diagnosis)</a></span>
+        <div class="d">Splits day-1 churn into "empty feed" vs "didn't care" — the data that decides your next retention bet.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">To&nbsp;do</span><span class="chip app">AO3</span></span>
+      </div>
+      <div class="qrow">
+        <span class="rank">7</span>
+        <span><span class="t"><a href="https://app.notion.com/383c5951aa5280fcaab8d30acb060b8d">AO3 — automate App Store metrics</a></span>
+        <div class="d">Kills a recurring manual chore; pairs naturally with the weekly review in this repo.</div></span>
+        <span class="chips"><span class="chip p0">P0</span><span class="chip">To&nbsp;do</span><span class="chip app">AO3</span></span>
+      </div>
+      <div class="qrow unblock">
+        <span class="rank">5&nbsp;min</span>
+        <span><span class="t"><a href="https://app.notion.com/3a3c5951aa528108a694dd2f9e28da40">Apply for the CarPlay entitlement</a></span>
+        <div class="d">Flagged <strong>USER ACTION</strong> in Notion — only you can file it, and a whole Radio feature lane waits on Apple's clock. Start it early.</div></span>
+        <span class="chips"><span class="chip">P1 · To&nbsp;do</span><span class="chip app">iOS Radio</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where the money is vs. where the effort is</h2>
+    <p class="h2-note">Revenue per project vs. active roadmap items (in progress + to-do) per project.</p>
+    <div class="split">
+      <div class="card panel">
+        <h3>Monthly revenue</h3>
+        <p class="note">$40K total, per Notion Projects</p>
+        <div class="brow"><span class="lbl">R Radio</span><span class="bar rev" style="width:100%"></span><span class="val">$18.0K</span></div>
+        <div class="brow"><span class="lbl">AO3 App</span><span class="bar rev" style="width:47%"></span><span class="val">$8.5K</span></div>
+        <div class="brow"><span class="lbl">Bessy</span><span class="bar rev" style="width:22%"></span><span class="val">$4.0K</span></div>
+        <div class="brow"><span class="lbl">Calculator</span><span class="bar rev" style="width:19%"></span><span class="val">$3.5K</span></div>
+        <div class="brow"><span class="lbl">Russian Radio</span><span class="bar rev" style="width:17%"></span><span class="val">$3.0K</span></div>
+        <div class="brow"><span class="lbl">iOS Radio Apps</span><span class="bar rev" style="width:17%"></span><span class="val">$3.0K</span></div>
+        <div class="brow"><span class="lbl">Second Strength</span><span class="bar zero"></span><span class="val">$0</span></div>
+      </div>
+      <div class="card panel">
+        <h3>Active roadmap items</h3>
+        <p class="note">29 open items, per Notion Roadmap</p>
+        <div class="brow"><span class="lbl">Second Strength</span><span class="bar eff" style="width:100%"></span><span class="val">14</span></div>
+        <div class="brow"><span class="lbl">iOS Radio Apps</span><span class="bar eff" style="width:79%"></span><span class="val">11</span></div>
+        <div class="brow"><span class="lbl">AO3 App</span><span class="bar eff" style="width:29%"></span><span class="val">4</span></div>
+        <div class="brow"><span class="lbl">R Radio</span><span class="bar zero"></span><span class="val">0</span></div>
+        <div class="brow"><span class="lbl">Bessy</span><span class="bar zero"></span><span class="val">0</span></div>
+        <div class="brow"><span class="lbl">Calculator</span><span class="bar zero"></span><span class="val">0</span></div>
+        <div class="brow"><span class="lbl">Russian Radio</span><span class="bar zero"></span><span class="val">0</span></div>
+      </div>
+    </div>
+    <div class="card takeaway">
+      <strong>45% of your revenue (R Radio, $18K/mo) has zero roadmap items</strong>, while ~86% of active work sits on Second Strength and iOS Radio — currently $3K/mo combined. Betting on new apps is fine, but nothing is protecting or growing the biggest earner. Worth one deliberate decision: is R Radio in maintenance mode on purpose?
+    </div>
+  </section>
+
+  <section>
+    <h2>Work in progress</h2>
+    <div class="card wip">
+      <span class="big">23</span>
+      <span class="txt"><strong>23 items are marked In Progress at once</strong> — 12 on Second Strength, 10 on iOS Radio, 1 on AO3. That's why "what do I do next?" is hard: everything is started, little is finishing. The rule this dashboard enforces: <strong>clear the P0 lane before touching anything new.</strong></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fix your data — 10 minutes in Notion</h2>
+    <p class="h2-note">These gaps make every future prioritization worse. Clean them once and this dashboard gets sharper.</p>
+    <div class="card fixes">
+      <div class="fix"><span class="ico">!</span><span><strong>4 unnamed roadmap rows, 3 of them P0</strong> — two "Researching" P0s and one Second Strength P0 to-do have no title at all. Name them or delete them; an unnamed P0 is invisible urgent work.</span></div>
+      <div class="fix"><span class="ico">!</span><span><strong>Second Strength has no Status or Priority</strong> in the Projects database, despite carrying 14 of your 29 active items. Set it to Active + P0/P1.</span></div>
+      <div class="fix"><span class="ico">!</span><span><strong>The Second Strength downloads goal contradicts itself</strong> — Behind, with current = target (1,000/1,000). Correct Current or flip the status.</span></div>
+      <div class="fix"><span class="ico">!</span><span><strong>~15 roadmap items have no Status or no Priority</strong> (e.g. "Tiktok Bot", "ability to add kudos", the TestFlight 1.6.30 release note), so they can never be ranked. Triage or archive them.</span></div>
+      <div class="fix"><span class="ico">!</span><span><strong>"Ad Spend Profitability Tracker" (P1) has no status</strong> and no project — orphaned since June 8. Adopt it or drop it.</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>How this ranking works:</strong> P0 bugs blocking a release → P0 monetization work (the At-Risk $100K goal's primary lever) → remaining P0s in flight → P0 to-dos, oldest first. P1s enter only when the P0 lane is empty.</p>
+    <p>Generated 2026-07-23 from the Notion databases Goals, Projects, Roadmap, and Epics. Regenerate anytime by asking for the <code>focus</code> skill in the A2operatingsystem repo — say "what should I work on" or "focus dashboard".</p>
+  </footer>
+</div>

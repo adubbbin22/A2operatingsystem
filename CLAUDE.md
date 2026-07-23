@@ -11,8 +11,12 @@ Read `PLAN.md` for the full architecture and phases. This file is your standing 
 - `apps/<app>/roadmap.md` — Now / Next / Later.
 - `apps/<app>/changelog.md` — user-facing release history.
 - `creatives/briefs/` — ad briefs (input). `creatives/generated/` — nano-banana output. `creatives/uploaded/` — what shipped, with IDs.
-- `dashboards/` — generated performance reports.
+- `dashboards/` — generated performance reports. `dashboards/focus/` — daily priority dashboards from Notion.
 - `.claude/skills/` — the repeatable workflows.
+- **Notion is the task/roadmap source of truth** — the App Command Center page
+  (`337c5951-aa52-81c2-a1f1-fef4e17ca29d`) holds the Projects, Roadmap, Goals, and Epics
+  databases (IDs in `.claude/skills/focus/SKILL.md`). This repo's `apps/*/roadmap.md` files
+  are summaries; when they disagree, Notion wins.
 
 ## MCP tools you have (see `.mcp.json`)
 - **nano-banana** — generate/edit ad images (Gemini image model).
@@ -23,6 +27,9 @@ Read `PLAN.md` for the full architecture and phases. This file is your standing 
 - **play-console** — Google Play releases, rollouts, Android vitals.
 - **revenuecat** — MRR, subscriptions, trials, churn, LTV.
 - **github** — this repo, issues, releases.
+- **notion** — connected as a claude.ai connector (not in `.mcp.json`): the App Command
+  Center's Projects / Roadmap / Goals / Epics databases. Query data sources one at a time
+  (plan limits apply to SQL queries).
 
 ## Rules of engagement (always)
 1. **Never activate ad spend or publish a release without explicit confirmation.** Meta ads are
@@ -31,7 +38,8 @@ Read `PLAN.md` for the full architecture and phases. This file is your standing 
 3. **Log everything shipped.** New ad → write a record in `creatives/uploaded/`. New release seen →
    append to the app's `changelog.md`.
 4. **Never print secrets.** Keys live in `.env`; reference env vars only.
-5. **Prefer a skill.** If a request matches `new-ad`, `weekly-review`, or `ship-log`, run that skill.
+5. **Prefer a skill.** If a request matches `new-ad`, `weekly-review`, `ship-log`, or
+   `focus` ("what should I work on / priorities"), run that skill.
 6. When numbers come from a new/unverified MCP, say so and suggest cross-checking the native dashboard.
 
 ## Metric definitions (keep reports consistent)
