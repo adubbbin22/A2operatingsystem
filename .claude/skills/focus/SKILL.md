@@ -47,6 +47,19 @@ Hub page: `337c5951-aa52-81c2-a1f1-fef4e17ca29d`. Query each data source **separ
    checklist. Optionally also render an HTML version alongside if the user wants a
    visual dashboard.
 
+## Live dashboard (artifact)
+
+A live, interactive version exists as a Claude artifact:
+`https://claude.ai/code/artifact/2d9a1626-7a72-464e-af3e-637d849dc821`
+- Source: `dashboards/focus/live-dashboard.html`. It queries Notion **in the viewer's
+  browser** via the artifact `mcp` capability (connector "Notion", tool
+  `notion-query-data-sources`) — same three queries, ranking computed client-side.
+- To change it: edit the source file, then republish with the Artifact tool passing
+  that `url` so the link stays stable, with capabilities
+  `{"mcp": {"servers": [{"server": "Notion", "tools": ["notion-query-data-sources"]}]}}`.
+- It caches results up to 5 min and refreshes on demand (no polling) to respect
+  Notion free-plan query limits.
+
 ## Guardrails
 
 - Read-only against Notion by default. Fixing hygiene items in Notion (naming rows,
