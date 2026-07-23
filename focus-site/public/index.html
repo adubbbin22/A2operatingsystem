@@ -113,7 +113,7 @@
   .app .tickets-line button { padding: 2px 8px; margin-left: 6px; font-size: 11px; }
   .app .repoline { font-size: 12px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .app .repoline a { color: var(--ink-3); }
-  .metricsrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 2px;
+  .metricsrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); gap: 8px; margin-top: 2px;
                 border-top: 1px solid var(--line); padding-top: 10px; }
   .metric .mv { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-3); }
   .metric .mv.has { color: var(--ink); }
@@ -488,17 +488,22 @@
       }
       card.append(repoLine);
 
-      const m = a.metrics || {};
+      const m = a.metrics;
       const row = el('div', 'metricsrow');
-      for (const [key, label] of [['installs', 'Installs 7d'], ['dau', 'DAU'], ['revenue7d', 'Revenue 7d']]) {
+      const items = (m && Array.isArray(m.items) && m.items.length)
+        ? m.items.slice(0, 4)
+        : [{ label: 'Installs 7d' }, { label: 'DAU' }, { label: 'Revenue 7d' }];
+      for (const it of items) {
         const cell = el('div', 'metric');
-        const has = m && m[key] != null;
-        cell.append(el('div', 'mv' + (has ? ' has' : ''), has ? String(m[key]) : '—'));
-        cell.append(el('div', 'ml', label));
+        const has = it.value != null;
+        cell.append(el('div', 'mv' + (has ? ' has' : ''), has ? String(it.value) : '—'));
+        cell.append(el('div', 'ml', it.label || ''));
         row.append(cell);
       }
       card.append(row);
-      if (!a.metrics) card.append(el('div', 'mnote', 'Firebase / BigQuery — next phase'));
+      card.append(el('div', 'mnote', m && m.asOf
+        ? `${m.source || 'metrics'} · as of ${m.asOf}`
+        : 'No metrics source wired — Firebase / BigQuery next'));
       grid.append(card);
     }
   }
@@ -511,6 +516,7 @@
     if (t.url) a.href = t.url;
     tt.append(a); mid.append(tt);
     if (rankLabel === '1') mid.append(el('div', 'd', whyText(t)));
+    if (t.note) mid.append(el('div', 'd', t.note));
     if (shippedFlag) mid.append(el('div', 'd', 'Recent commits in ' + shippedFlag.repoKey + ' look like this work — verify, then tell Claude to close it.'));
     row.append(mid);
     const chips = el('span', 'chips');

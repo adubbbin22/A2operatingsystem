@@ -1,6 +1,6 @@
 {
   "updated": "2026-07-23",
-  "updatedBy": "Claude — seeded from the Notion App Command Center pull of 2026-07-23",
+  "updatedBy": "Claude — Notion seed + first live KPI pull (Supabase app databases)",
   "goals": [
     {
       "id": "revenue-100k",
@@ -39,16 +39,43 @@
     { "id": "calculator", "name": "Calculator", "platforms": ["iOS", "Android"], "revenueMonthly": 3500, "status": "Active", "priority": null, "repo": null, "metrics": null },
     { "id": "russian-radio", "name": "Russian Radio", "platforms": ["iOS", "Android"], "revenueMonthly": 3000, "status": "Active", "priority": null, "repo": null, "metrics": null },
     { "id": "ios-radio", "name": "iOS Radio Apps", "platforms": ["iOS"], "revenueMonthly": 3000, "status": "Active", "priority": "P1", "repo": null, "metrics": null },
-    { "id": "second-strength", "name": "Second Strength", "platforms": ["iOS"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": null, "metrics": null },
+    { "id": "second-strength", "name": "Second Strength", "platforms": ["iOS"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": null, "supabase": "rkdivdekglwrlqtjuwzs",
+      "metrics": { "asOf": "2026-07-23", "source": "Supabase app DB", "items": [
+        { "label": "Users", "value": "600" },
+        { "label": "New 7d", "value": "+88" },
+        { "label": "Active 7d", "value": "116" },
+        { "label": "DAU", "value": "25" }
+      ] } },
     { "id": "ru-push", "name": "Russian Radio Push Automation", "platforms": ["iOS", "Android"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/radio_online", "metrics": null },
-    { "id": "lullaby", "name": "Lullaby TikTok Generator", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/lullaby-os", "metrics": null },
+    { "id": "lullaby", "name": "Lullaby TikTok Generator", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/lullaby-os", "supabase": "ktbilgfkyumpoonnlfba",
+      "metrics": { "asOf": "2026-07-23", "source": "Supabase baby-app DB", "items": [
+        { "label": "Users", "value": "38" },
+        { "label": "New 30d", "value": "1" },
+        { "label": "Active 7d", "value": "0" }
+      ] } },
     { "id": "ao3wiki", "name": "ao3wiki.com", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/ao3wiki", "metrics": null },
     { "id": "tiktok-slideshow", "name": "TikTok Slideshow Generator", "platforms": ["CLI"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/TikTok-slideshow-generator-", "metrics": null },
-    { "id": "ma-dashboard", "name": "M&A Outreach Dashboard", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/M-A-dashboard-", "metrics": null },
+    { "id": "ma-dashboard", "name": "M&A Outreach Dashboard", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/M-A-dashboard-", "supabase": "snookhwbojzljadhwjpe",
+      "metrics": { "asOf": "2026-07-23", "source": "Supabase M&A DB", "items": [
+        { "label": "Targets", "value": "5,191" },
+        { "label": "Threads", "value": "1,641" },
+        { "label": "Emails", "value": "2,005" }
+      ] } },
+    { "id": "viral-tracker", "name": "Viral Tracker", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": null, "supabase": "bkanzuiakbqtqtfrerjn",
+      "metrics": { "asOf": "2026-07-23", "source": "Supabase DB", "items": [
+        { "label": "Users", "value": "1" },
+        { "label": "Posts found", "value": "35" },
+        { "label": "Generations", "value": "0" }
+      ] } },
     { "id": "moneyprinter", "name": "MoneyPrinterV2", "platforms": ["CLI"], "revenueMonthly": 0, "status": "Paused", "priority": null, "repo": "adubbbin22/MoneyPrinterV2", "metrics": null },
     { "id": "bandle", "name": "Bandle Clone", "platforms": ["Web", "iOS", "Android"], "revenueMonthly": 0, "status": "Paused", "priority": null, "repo": "adubbbin22/bandle_clone", "metrics": null }
   ],
   "tickets": [
+    { "id": "lullaby-supabase-rls", "title": "Security: enable RLS on baby-app Supabase — 8 public tables exposed via anon key", "app": "lullaby", "priority": "P0", "status": "ToDo", "type": "Bug", "created": "2026-07-23", "note": "babies, ledger (393 care events), users, households… readable AND writable by anyone with the shipped anon key. Needs policies before enabling — SQL in dashboards/security/2026-07-23-supabase-rls.md." },
+    { "id": "ma-supabase-rls", "title": "Security: enable RLS on M&A Supabase — all outreach emails exposed via anon key", "app": "ma-dashboard", "priority": "P0", "status": "ToDo", "type": "Bug", "created": "2026-07-23", "note": "5,191 targets + 2,005 emails readable/writable with the anon key. If the Flask app uses the service-role key server-side, enabling RLS is safe immediately — verify first. SQL in dashboards/security/2026-07-23-supabase-rls.md." },
+    { "id": "viral-supabase-rls", "title": "Security: enable RLS on Viral Tracker Supabase (7 tables)", "app": "viral-tracker", "priority": "P2", "status": "ToDo", "type": "Bug", "created": "2026-07-23", "note": "Little data today, same anon-key hole. SQL in dashboards/security/2026-07-23-supabase-rls.md." },
+    { "id": "ua-revenuecat-key", "title": "Add REVENUECAT_V2_SECRET_KEY to .env — unlocks real revenue KPIs for every subscription app", "app": null, "priority": "P1", "status": "ToDo", "type": "Tool", "created": "2026-07-23", "userAction": true, "note": "RevenueCat dashboard → API keys → v2 secret. Replaces self-reported revenue with actual MRR/trials/churn on this dashboard." },
+    { "id": "ua-firebase-bigquery", "title": "Provide Firebase/BigQuery service account — unlocks DAU + retention tiles for the store apps", "app": null, "priority": "P1", "status": "ToDo", "type": "Tool", "created": "2026-07-23", "userAction": true, "note": "Only live source for AO3/R Radio/Calculator DAU & D1 retention (the 30K-DAU goal has no live feed today)." },
     { "id": "ss-healthkit-dates", "title": "Bug: HealthKit date filters silently ignored — yesterday-steps shows lifetime total (~260k)", "app": "second-strength", "priority": "P0", "status": "In Progress", "type": "Bug", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa5281fa9c8bfd69a442c827" },
     { "id": "ao3-price-testing-ios", "title": "AO3 price testing (iOS)", "app": "ao3", "priority": "P0", "status": "In Progress", "type": "Improvement", "created": "2026-06-18", "url": "https://app.notion.com/383c5951aa5280ca8355e206585cd11c" },
     { "id": "ss-revenuecat-identity", "title": "Web→app subscriptions: unify RevenueCat identity so a web trial unlocks the app", "app": "second-strength", "priority": "P0", "status": "In Progress", "type": "Feature", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa52810b9324cdfe4747757f" },

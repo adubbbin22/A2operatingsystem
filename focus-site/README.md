@@ -51,14 +51,16 @@ Say it to Claude in this repo, in plain language:
 
 Claude edits `data/portfolio.json`, commits, pushes → site updates.
 
-## Next phase: Firebase / BigQuery metrics
+## Metrics
 
-Each app has a `metrics` field (currently `null`) rendered as tiles (Installs 7d, DAU,
-Revenue 7d). The plan: connect a Firebase / BigQuery MCP in a Claude session, have Claude
-pull per-app numbers and write them into `metrics` (e.g.
-`{"installs": 1240, "dau": 8300, "revenue7d": "$2.1K", "asOf": "2026-07-23"}`), push, done —
-the tiles light up. No dashboard changes needed for the first version; a `metrics-history/`
-file can come later for sparklines.
+Each app's `metrics` field renders as tiles:
+`{"asOf": "2026-07-23", "source": "Supabase app DB", "items": [{"label": "Users", "value": "600"}, …]}`
+(up to 4 items; `null` shows placeholders). Claude refreshes them on request ("pull KPIs"):
+- **Live today**: Supabase app databases (Second Strength, baby app, M&A, Viral Tracker —
+  refs in each app's `supabase` field) and GitHub activity.
+- **Next**: RevenueCat (needs `REVENUECAT_V2_SECRET_KEY`) for real revenue, and
+  Firebase / BigQuery (needs a service account) for store-app DAU/retention — both tracked
+  as USER-ACTION tickets on the dashboard.
 
 ## Security notes
 - The page and its data sit behind the `DASH_PASSWORD` shared secret; tokens live only as
