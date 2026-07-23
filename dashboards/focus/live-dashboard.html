@@ -9,6 +9,7 @@
     --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
     --good-text: #006300;
     --critical-tint: rgba(208,59,59,0.08); --serious-tint: rgba(236,131,90,0.10);
+    --good-tint: rgba(12,163,12,0.10);
     --track: #eeede8;
   }
   @media (prefers-color-scheme: dark) {
@@ -19,6 +20,7 @@
       --line: #2c2c2a; --ring: rgba(255,255,255,0.10);
       --accent: #3987e5; --effort: #d95926; --good-text: #0ca30c;
       --critical-tint: rgba(208,59,59,0.14); --serious-tint: rgba(236,131,90,0.14);
+      --good-tint: rgba(12,163,12,0.16);
       --track: #262625;
     }
   }
@@ -29,6 +31,7 @@
     --line: #2c2c2a; --ring: rgba(255,255,255,0.10);
     --accent: #3987e5; --effort: #d95926; --good-text: #0ca30c;
     --critical-tint: rgba(208,59,59,0.14); --serious-tint: rgba(236,131,90,0.14);
+    --good-tint: rgba(12,163,12,0.16);
     --track: #262625;
   }
   :root[data-theme="light"] {
@@ -40,6 +43,7 @@
     --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
     --good-text: #006300;
     --critical-tint: rgba(208,59,59,0.08); --serious-tint: rgba(236,131,90,0.10);
+    --good-tint: rgba(12,163,12,0.10);
     --track: #eeede8;
   }
 
@@ -109,7 +113,7 @@
   .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700;
           letter-spacing: 0.02em; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
   .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-  .pill.good { color: var(--good-text); background: rgba(12,163,12,0.10); }
+  .pill.good { color: var(--good-text); background: var(--good-tint); }
   .pill.serious { color: var(--serious); background: var(--serious-tint); }
   .pill.critical { color: var(--critical); background: var(--critical-tint); }
   .pill.neutral { color: var(--ink-2); background: var(--track); }
@@ -137,12 +141,39 @@
   .chip.p0 { color: #fff; background: var(--critical); border-color: var(--critical); }
   .chip.p1 { color: var(--serious); border-color: var(--serious); }
   .chip.app { font-weight: 600; }
+  .chip.shipped { color: var(--good-text); border-color: var(--good); background: var(--good-tint); }
   .qrow.unblock { border-top: 1px dashed var(--line); background: var(--serious-tint); }
   .qrow.unblock .rank { font-size: 12px; font-weight: 700; color: var(--serious); }
   .empty { padding: 18px; font-size: 13px; color: var(--ink-3); }
   @media (max-width: 640px) {
     .qrow { grid-template-columns: 30px 1fr; }
     .chips { grid-column: 2; margin-top: 4px; }
+  }
+
+  /* github section */
+  .ghgrid { padding: 4px 0; }
+  .ghrow { display: grid; grid-template-columns: 150px 1fr auto; gap: 12px; padding: 11px 18px;
+           border-top: 1px solid var(--line); align-items: baseline; }
+  .ghrow:first-child { border-top: 0; }
+  .ghrow .proj { font-weight: 600; font-size: 13px; }
+  .ghrow .repo { font-size: 12px; color: var(--ink-3); }
+  .ghrow .repo a { color: var(--ink-3); }
+  .ghrow .last { font-size: 13px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ghrow .last a { text-decoration: none; }
+  .ghrow .last a:hover { text-decoration: underline; }
+  .ghrow .act { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ghrow .act strong { color: var(--ink); }
+  .shipbox { margin-top: 14px; padding: 4px 0; }
+  .shipbox .head { padding: 12px 18px 8px; font-size: 13px; font-weight: 600; color: var(--good-text); }
+  .shiprow { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 9px 18px;
+             border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
+  .shiprow .ico { color: var(--good-text); font-weight: 700; text-align: center; }
+  .shiprow a { font-weight: 600; color: var(--ink); text-decoration: none; }
+  .shiprow a:hover { text-decoration: underline; }
+  .shiprow .ev { color: var(--ink-3); font-size: 12px; margin-top: 2px; }
+  @media (max-width: 640px) {
+    .ghrow { grid-template-columns: 1fr auto; }
+    .ghrow .last { grid-column: 1 / -1; }
   }
 
   .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -186,7 +217,7 @@
   <header>
     <p class="eyebrow">A2 Operating System · Focus</p>
     <h1>What matters today</h1>
-    <p class="sub">Live from your Notion <a href="https://app.notion.com/p/337c5951aa5281c2a1f1fef4e17ca29d">App Command Center</a> — Goals, Projects &amp; Roadmap</p>
+    <p class="sub">Live from your Notion <a href="https://app.notion.com/p/337c5951aa5281c2a1f1fef4e17ca29d">App Command Center</a>, verified against GitHub commit activity</p>
     <div class="statusrow">
       <span class="dot" id="dot"></span>
       <span id="freshness">Connecting to Notion…</span>
@@ -200,14 +231,14 @@
 
   <section id="sec-goals">
     <h2>Goals</h2>
-    <p class="h2-note" id="goals-note">The portfolio's commitments, straight from the Goals database.</p>
+    <p class="h2-note">The portfolio's commitments, straight from the Goals database.</p>
     <div id="goals-err"></div>
     <div class="goals" id="goals"><div class="card skeleton">Loading goals</div></div>
   </section>
 
   <section id="sec-queue">
     <h2>Do next — the P0 lane</h2>
-    <p class="h2-note">Ranked live: release-blocking bugs first, then in-flight P0s (oldest first), then P0 to-dos. P1s stay hidden until the lane is empty.</p>
+    <p class="h2-note">Ranked live: release-blocking bugs first, then in-flight P0s (oldest first), then P0 to-dos. Items whose work already shows up in commits get a <strong>shipped?</strong> badge — verify and mark them Done in Notion.</p>
     <div class="controls" id="controls" hidden>
       <span class="lbl">Project</span>
       <span id="filterchips" style="display:contents"></span>
@@ -215,6 +246,14 @@
     </div>
     <div id="queue-err"></div>
     <div class="card queue" id="queue"><div class="skeleton">Loading the roadmap</div></div>
+  </section>
+
+  <section id="sec-github">
+    <h2>Reality check — GitHub</h2>
+    <p class="h2-note">Commit activity in the last 30 days for every repo linked on a Notion project, and open items whose work already appears in commit messages.</p>
+    <div id="gh-err"></div>
+    <div class="card ghgrid" id="ghgrid"><div class="skeleton">Waiting for project repos</div></div>
+    <div class="card shipbox" id="shipbox" hidden></div>
   </section>
 
   <section id="sec-split">
@@ -237,34 +276,41 @@
   </section>
 
   <footer>
-    <p><strong>Ranking rule:</strong> P0 bugs in flight → other in-flight P0s (oldest first) → P0 to-dos (oldest first) → P1s only when the P0 lane is empty. Unnamed items are never ranked — they're flagged below instead.</p>
-    <p>Reads Notion with your own connector; nothing is written. Data is cached up to 5 minutes — the Refresh button forces a re-query. Notion free-plan limits apply to these queries, so it refreshes on demand rather than polling. Regenerate the repo snapshot with the <code>focus</code> skill in A2operatingsystem.</p>
+    <p><strong>Ranking rule:</strong> P0 bugs in flight → other in-flight P0s (oldest first) → P0 to-dos (oldest first) → P1s only when the P0 lane is empty. Unnamed items are never ranked — they're flagged above instead.</p>
+    <p><strong>Shipped? badges are a hint, not a verdict:</strong> they mean ≥ half of an item's keywords appear in the repo's recent commit messages. Click through, confirm, then mark it Done in Notion — this page never writes.</p>
+    <p>Reads Notion and GitHub with your own connectors. Data is cached up to 5 minutes; Refresh forces a re-query. No background polling (Notion free-plan query limits apply). Repo snapshot: the <code>focus</code> skill in A2operatingsystem.</p>
   </footer>
 </div>
 
 <script>
 (() => {
   'use strict';
-  const SERVER = 'Notion';
-  const TOOL = 'notion-query-data-sources';
+  const NOTION = 'Notion';
+  const N_TOOL = 'notion-query-data-sources';
+  const GITHUB = 'GitHub';
+  const GH_TOOL = 'list_commits';
   const COLS = {
     projects: 'collection://7ede16cc-f8ad-426a-b74d-239dde761cf5',
     roadmap:  'collection://0354593e-7f18-4bb2-8e86-634ba701e11a',
     goals:    'collection://46d78009-cab3-4fc0-91d4-56aa1d66d20b',
   };
   const QUERIES = {
-    projects: `SELECT url, "Name", "Status", "Priority", "Monthly Revenue" FROM "${COLS.projects}" LIMIT 100`,
+    projects: `SELECT url, "Name", "Status", "Priority", "Monthly Revenue", "GitHub" FROM "${COLS.projects}" LIMIT 100`,
     roadmap:  `SELECT url, "Name", "Status", "Priority", "Type", "Project", createdTime FROM "${COLS.roadmap}" LIMIT 300`,
     goals:    `SELECT url, "Name", "Target", "Current", "Status" FROM "${COLS.goals}" LIMIT 50`,
   };
   const CACHE_OPTS = { cache: { staleTime: 300000, gcTime: 86400000 } };
+  // stable within the day so cached watches aren't busted on every open
+  const SINCE = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
 
   const state = {
     rows: { projects: null, roadmap: null, goals: null },
     meta: {}, err: {},
+    gh: new Map(),          // "owner/repo" -> {commits, err, at}
     filter: 'all', showP1: false,
     unsubs: [],
   };
+  const ghRegistered = new Set();
 
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, text) => {
@@ -277,23 +323,27 @@
   const fmtNum = (n) => n >= 1000 ? (n / 1000).toFixed(n % 1000 ? 1 : 0) + 'K' : String(n);
   const hexId = (u) => { const m = /([0-9a-f]{32})/.exec(u || ''); return m ? m[1] : null; };
   const parseRefs = (s) => { try { const a = JSON.parse(s || '[]'); return Array.isArray(a) ? a.map(hexId).filter(Boolean) : []; } catch { return []; } };
+  const parseRepo = (u) => { const m = /github\.com\/([^\/\s]+)\/([^\/\s#?]+?)(?:\.git)?(?:[\/#?].*)?$/.exec(u || ''); return m ? { owner: m[1], repo: m[2] } : null; };
+  const daysAgo = (iso) => { const d = (Date.now() - Date.parse(iso)) / 864e5; return d < 1 ? 'today' : d < 2 ? 'yesterday' : Math.floor(d) + 'd ago'; };
   const shortName = (n) => (n || '')
     .replace(/^\[DEPRECATED[^\]]*\]\s*/, '')
     .replace(/ (App|Apps)$/, '')
     .replace('Russian Radio Push Automation', 'RU Push Automation');
 
   // ---------- error copy per code ----------
-  function errCopy(code) {
+  function errCopy(code, server) {
+    const s = server || 'the connector';
     switch (code) {
-      case 'needs_reauth': return 'Notion needs to be reconnected — claude.ai Settings → Connectors → Reconnect Notion.';
-      case 'server_not_connected': return 'No Notion connector found — add Notion in claude.ai Settings → Connectors.';
-      case 'selection_required': return 'You have more than one Notion connector — pick one in the prompt claude.ai shows for this page.';
-      case 'blocked_by_policy': return 'Your organization’s policy blocks this Notion tool for artifacts.';
-      case 'approval_required': return 'This Notion tool needs per-call approval, which artifacts can’t request yet.';
-      case 'tool_error': return 'Notion answered with an error — often the hourly query limit on free plans. Try Refresh in a while.';
+      case 'needs_reauth': return `${s} needs to be reconnected — claude.ai Settings → Connectors → Reconnect.`;
+      case 'server_not_connected': return `No ${s} connector found — add ${s} in claude.ai Settings → Connectors.`;
+      case 'selection_required': return `You have more than one ${s} connector — pick one in the prompt claude.ai shows for this page.`;
+      case 'blocked_by_policy': return `Your organization’s policy blocks this ${s} tool for artifacts.`;
+      case 'approval_required': return `This ${s} tool needs per-call approval, which artifacts can’t request yet.`;
+      case 'not_in_manifest': return `This page’s grant doesn’t cover the ${s} call — re-open it and accept the connector prompt.`;
+      case 'tool_error': return `${s} answered with an error${s === NOTION ? ' — often the hourly query limit on free plans' : ''}. Try Refresh in a while.`;
       case 'not_granted': case 'capability_disabled': case 'capability_removed':
-        return 'This view didn’t grant live-data access. Reopen the artifact from claude.ai and allow the Notion connection.';
-      default: return 'Notion is temporarily unreachable — last good data is shown; it retries on the next refresh.';
+        return 'This view didn’t grant live-data access. Reopen the artifact from claude.ai and allow the connections.';
+      default: return `${s} is temporarily unreachable — last good data is shown; it retries on the next refresh.`;
     }
   }
   const AUTHZ = new Set(['needs_reauth', 'server_not_connected', 'blocked_by_policy', 'approval_required', 'not_granted', 'capability_disabled', 'capability_removed']);
@@ -308,7 +358,7 @@
       dot.className = 'dot err';
       fresh.textContent = 'Not connected';
       banner.hidden = false; banner.textContent = '';
-      banner.append(el('strong', null, 'Live data unavailable. '), document.createTextNode(errCopy(codes[0])));
+      banner.append(el('strong', null, 'Live data unavailable. '), document.createTextNode(errCopy(codes[0], NOTION)));
       return;
     }
     banner.hidden = true;
@@ -322,10 +372,10 @@
       : 'Live';
   }
 
-  function sectionErr(key, container) {
+  function sectionErr(key, container, server) {
     container.textContent = '';
     const e = state.err[key];
-    if (e) container.append(el('p', 'secerr', '⚠ ' + errCopy(e.code)));
+    if (e) container.append(el('p', 'secerr', '⚠ ' + errCopy(e.code, server)));
   }
 
   // ---------- derived data ----------
@@ -335,7 +385,8 @@
       const id = hexId(p.url);
       if (!id || /^\[DEPRECATED/.test(p.Name || '') || p.Status === 'Archived') continue;
       map.set(id, { id, name: p.Name || 'Unnamed project', revenue: p['Monthly Revenue'] || 0,
-                    status: p.Status, priority: p.Priority, url: p.url });
+                    status: p.Status, priority: p.Priority, url: p.url,
+                    repo: parseRepo(p.GitHub) });
     }
     return map;
   }
@@ -363,6 +414,157 @@
     return { p0: lanes.flat(), p1, unblocks };
   }
 
+  // ---------- github reconciliation ----------
+  const STOP = new Set(['the','and','for','with','from','into','that','this','all','are','was','has','have','not',
+    'add','fix','bug','new','app','apps','ios','android','web','screen','screens','improve','improvement','feature',
+    'update','support','user','users','round','turn','turns','next','after','when','your','out','via']);
+  const tokens = (name) => (name || '').toLowerCase()
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .split(/\s+/)
+    .filter(t => t.length >= 3 && !STOP.has(t) && !/^\d+$/.test(t));
+
+  // itemUrl -> {repoKey, evidence: commit}
+  function computeShipped(projects) {
+    const flags = new Map();
+    if (!state.rows.roadmap) return flags;
+    const haystacks = new Map();
+    for (const [key, entry] of state.gh) {
+      if (entry.commits && entry.commits.length)
+        haystacks.set(key, entry.commits.map(c => (c.commit && c.commit.message || '').toLowerCase()));
+    }
+    if (!haystacks.size) return flags;
+    for (const r of state.rows.roadmap.filter(x => ACTIVE(x) && x.Name)) {
+      const T = tokens(r.Name);
+      if (T.length < 2) continue;
+      for (const id of parseRefs(r.Project)) {
+        const p = projects.get(id);
+        if (!p || !p.repo) continue;
+        const key = p.repo.owner + '/' + p.repo.repo;
+        const msgs = haystacks.get(key);
+        if (!msgs) continue;
+        const joined = msgs.join('\n');
+        const matched = T.filter(t => joined.includes(t));
+        if (matched.length >= 2 && matched.length / T.length >= 0.5) {
+          const evIdx = msgs.findIndex(m => matched.some(t => m.includes(t)));
+          const entry = state.gh.get(key);
+          flags.set(r.url, { repoKey: key, evidence: entry.commits[Math.max(0, evIdx)] });
+          break;
+        }
+      }
+    }
+    return flags;
+  }
+
+  function ensureGithubWatches(projects) {
+    if (!window.claude || !window.claude.mcp) return;
+    for (const p of projects.values()) {
+      if (!p.repo) continue;
+      const key = p.repo.owner + '/' + p.repo.repo;
+      if (ghRegistered.has(key)) continue;
+      ghRegistered.add(key);
+      const input = { owner: p.repo.owner, repo: p.repo.repo, perPage: 100, since: SINCE };
+      const unsub = window.claude.mcp.watchTool(GITHUB, GH_TOOL, input, (ev) => {
+        const entry = state.gh.get(key) || {};
+        if (ev.type === 'data') {
+          let rows = ev.result && ev.result.payload;
+          if (typeof rows === 'string') { try { rows = JSON.parse(rows); } catch { rows = null; } }
+          if (Array.isArray(rows)) {
+            entry.commits = rows; entry.err = null;
+            entry.at = (ev.result.cache && ev.result.cache.storedAt) || Date.now();
+          }
+        } else {
+          entry.err = ev.error;
+          if (AUTHZ.has(ev.error.code)) entry.commits = null;
+        }
+        state.gh.set(key, entry);
+        renderAll();
+      }, CACHE_OPTS);
+      state.unsubs.push(unsub);
+    }
+  }
+
+  function renderGithub(projects, shipped) {
+    const grid = $('ghgrid'), errBox = $('gh-err'), shipbox = $('shipbox');
+    errBox.textContent = '';
+    if (!projects) return;
+    const linked = [...projects.values()].filter(p => p.repo);
+    grid.textContent = '';
+    if (!linked.length) {
+      grid.append(el('div', 'empty', 'No Notion project has a GitHub link yet — fill the GitHub property on Projects rows to activate this section.'));
+      return;
+    }
+
+    // one shared authz error → section-level message
+    const errs = [...state.gh.values()].map(e => e.err).filter(Boolean);
+    if (errs.length && errs.length === [...state.gh.keys()].length && errs.every(e => AUTHZ.has(e.code))) {
+      errBox.append(el('p', 'secerr', '⚠ ' + errCopy(errs[0].code, GITHUB)));
+    }
+
+    for (const p of linked.sort((a, b) => b.revenue - a.revenue || a.name.localeCompare(b.name))) {
+      const key = p.repo.owner + '/' + p.repo.repo;
+      const entry = state.gh.get(key);
+      const row = el('div', 'ghrow');
+      const left = el('span');
+      left.append(el('div', 'proj', shortName(p.name)));
+      const repoLine = el('div', 'repo');
+      const ra = el('a', null, key);
+      ra.href = 'https://github.com/' + key;
+      repoLine.append(ra); left.append(repoLine);
+      row.append(left);
+
+      const last = el('span', 'last');
+      const act = el('span', 'act');
+      if (entry && entry.commits) {
+        const n = entry.commits.length;
+        if (n) {
+          const c = entry.commits[0];
+          const a = el('a', null, (c.commit.message || '').split('\n')[0]);
+          a.href = c.html_url;
+          last.append(a);
+          act.textContent = '';
+          act.append(el('strong', null, String(n)), document.createTextNode(` commits · last ${daysAgo(c.commit.author && c.commit.author.date)}`));
+        } else {
+          last.textContent = 'No commits in the last 30 days';
+          last.style.color = 'var(--ink-3)';
+          act.textContent = 'quiet';
+        }
+      } else if (entry && entry.err) {
+        last.textContent = AUTHZ.has(entry.err.code) ? 'Needs the GitHub connector' : 'Temporarily unreachable';
+        last.style.color = 'var(--ink-3)';
+        act.textContent = '—';
+      } else {
+        last.textContent = 'Checking…';
+        last.style.color = 'var(--ink-3)';
+        act.textContent = '';
+      }
+      row.append(last, act);
+      grid.append(row);
+    }
+
+    // "looks shipped" block
+    shipbox.hidden = true;
+    if (shipped && shipped.size && state.rows.roadmap) {
+      shipbox.hidden = false; shipbox.textContent = '';
+      shipbox.append(el('div', 'head', `Open in Notion, but the commits say otherwise (${shipped.size})`));
+      for (const r of state.rows.roadmap.filter(x => shipped.has(x.url))) {
+        const f = shipped.get(r.url);
+        const row = el('div', 'shiprow');
+        row.append(el('span', 'ico', '✓'));
+        const s = el('span');
+        const a = el('a', null, r.Name); a.href = r.url; s.append(a);
+        s.append(document.createTextNode(` — still "${r.Status}" in Notion.`));
+        const ev = el('div', 'ev');
+        const evA = el('a', null, 'Matching commit in ' + f.repoKey + ': “' + (f.evidence.commit.message || '').split('\n')[0] + '”');
+        evA.href = f.evidence.html_url; evA.style.color = 'var(--ink-3)';
+        ev.append(evA); s.append(ev);
+        row.append(s);
+        shipbox.append(row);
+      }
+    }
+  }
+
+  // ---------- renderers ----------
   function whyText(item) {
     if (item.Type === 'Bug' && item.Status === 'In Progress')
       return 'A P0 bug already in flight — broken behavior in front of users outranks every feature. Finish and ship it.';
@@ -371,11 +573,11 @@
     return 'The oldest unstarted P0 — it has waited longest and nothing above it is free.';
   }
 
-  // ---------- renderers ----------
-  function renderHero(queue) {
+  function renderHero(queue, shipped) {
     const sec = $('sec-hero'); sec.textContent = '';
     if (!queue) { sec.append(el('div', 'card skeleton', 'Loading your top priority')); return; }
-    const top = queue.p0[0] || queue.p1[0];
+    const unshipped = queue.p0.filter(i => !shipped.has(i.url));
+    const top = unshipped[0] || queue.p1.filter(i => !shipped.has(i.url))[0];
     const card = el('div', 'card hero');
     card.append(el('p', 'eyebrow', 'Do this first'));
     if (!top) {
@@ -384,16 +586,16 @@
     } else {
       const h = el('h3'); const a = el('a', null, top.Name);
       a.href = top.url; h.append(a); card.append(h);
+      if (top.projNames.length) card.append(el('p', null, top.projNames.join(' · ')));
       const why = el('p', 'why');
       why.append(el('strong', null, 'Why it’s #1: '), document.createTextNode(whyText(top)));
-      if (top.projNames.length) card.append(el('p', null, top.projNames.join(' · ')));
       card.append(why);
     }
     sec.append(card);
   }
 
   function renderGoals() {
-    const wrapEl = $('goals'); sectionErr('goals', $('goals-err'));
+    const wrapEl = $('goals'); sectionErr('goals', $('goals-err'), NOTION);
     const rows = state.rows.goals;
     if (!rows) { if (state.err.goals && AUTHZ.has(state.err.goals.code)) { wrapEl.textContent = ''; wrapEl.classList.add('dim'); } return; }
     wrapEl.classList.remove('dim'); wrapEl.textContent = '';
@@ -421,14 +623,16 @@
     if (!wrapEl.children.length) wrapEl.append(el('div', 'card skeleton', 'No named goals found'));
   }
 
-  function queueRow(item, rankLabel, isNow) {
+  function queueRow(item, rankLabel, isNow, shippedFlag) {
     const row = el('div', 'qrow' + (isNow ? ' now' : ''));
     row.append(el('span', 'rank', rankLabel));
     const mid = el('span'); const t = el('span', 't');
     const a = el('a', null, item.Name); a.href = item.url; t.append(a); mid.append(t);
-    if (isNow !== undefined && rankLabel === '1') mid.append(el('div', 'd', whyText(item)));
+    if (rankLabel === '1') mid.append(el('div', 'd', whyText(item)));
+    if (shippedFlag) mid.append(el('div', 'd', 'Recent commits in ' + shippedFlag.repoKey + ' look like this work — verify and mark it Done.'));
     row.append(mid);
     const chips = el('span', 'chips');
+    if (shippedFlag) chips.append(el('span', 'chip shipped', '✓ shipped?'));
     chips.append(el('span', 'chip ' + (item.Priority === 'P0' ? 'p0' : item.Priority === 'P1' ? 'p1' : ''), item.Priority || '—'));
     chips.append(el('span', 'chip', (item.Type ? item.Type + ' · ' : '') + (item.Status || 'No status')));
     if (item.projNames.length) chips.append(el('span', 'chip app', item.projNames.map(shortName).join(', ')));
@@ -436,12 +640,11 @@
     return row;
   }
 
-  function renderQueue(queue, projects) {
-    const box = $('queue'); sectionErr('roadmap', $('queue-err'));
+  function renderQueue(queue, shipped) {
+    const box = $('queue'); sectionErr('roadmap', $('queue-err'), NOTION);
     if (!queue) { if (state.err.roadmap && AUTHZ.has(state.err.roadmap.code)) { box.textContent = ''; box.classList.add('dim'); box.append(el('div', 'empty', 'Roadmap unavailable.')); } return; }
     box.classList.remove('dim'); box.textContent = '';
 
-    // filter chips
     const counts = new Map();
     for (const it of [...queue.p0, ...queue.p1])
       for (const n of it.projNames) counts.set(n, (counts.get(n) || 0) + 1);
@@ -462,12 +665,11 @@
     $('controls').hidden = false;
 
     const match = (it) => state.filter === 'all' || it.projNames.includes(state.filter);
-    const p0 = queue.p0.filter(match);
     let rank = 0, shown = 0;
     for (const it of queue.p0) {
       rank++;
       if (!match(it)) continue;
-      box.append(queueRow(it, String(rank), it.Status === 'In Progress'));
+      box.append(queueRow(it, String(rank), it.Status === 'In Progress', shipped.get(it.url)));
       shown++;
     }
     if (!shown) box.append(el('div', 'empty', state.filter === 'all'
@@ -479,11 +681,11 @@
       for (const it of queue.p1) {
         r1++;
         if (!match(it)) continue;
-        box.append(queueRow(it, 'P1·' + r1, false));
+        box.append(queueRow(it, 'P1·' + r1, false, shipped.get(it.url)));
       }
     }
     for (const it of queue.unblocks.filter(match)) {
-      const row = queueRow(it, 'YOU', false);
+      const row = queueRow(it, 'YOU', false, null);
       row.classList.add('unblock');
       row.querySelector('.t').after(el('div', 'd', 'Flagged USER ACTION in Notion — only you can do this step, and it starts an external clock. Do it early.'));
       row.classList.remove('now');
@@ -503,7 +705,7 @@
   }
 
   function renderSplit(projects) {
-    const box = $('split'); sectionErr('projects', $('split-err'));
+    const box = $('split'); sectionErr('projects', $('split-err'), NOTION);
     const proj = state.rows.projects, road = state.rows.roadmap;
     if (!proj || !road) return;
     box.textContent = '';
@@ -530,7 +732,6 @@
     barRows(p2, effSorted.map(e => ({ name: e.name, value: e.active })), effMax, 'eff', String);
     box.append(p1, p2);
 
-    // computed takeaway
     const tk = $('takeaway'); tk.hidden = true;
     const idleTop = revSorted.find(e => e.active === 0 && e.revenue > 0);
     const busiest = effSorted[0];
@@ -566,7 +767,7 @@
     box.append(txt);
   }
 
-  function renderHygiene() {
+  function renderHygiene(shipped) {
     const road = state.rows.roadmap, proj = state.rows.projects, goals = state.rows.goals;
     if (!road || !proj) return;
     const projects = projectIndex();
@@ -575,8 +776,17 @@
     const unnamedP0 = unnamed.filter(r => r.Priority === 'P0').length;
     if (unnamed.length) fixes.push([`${unnamed.length} unnamed roadmap row${unnamed.length > 1 ? 's' : ''}${unnamedP0 ? `, ${unnamedP0} of them P0` : ''}`,
       ' — an unnamed item can never be ranked. Name or delete them.']);
+    if (shipped && shipped.size)
+      fixes.push([`${shipped.size} open item${shipped.size > 1 ? 's' : ''} look${shipped.size > 1 ? '' : 's'} already shipped in GitHub`,
+        ' — see the Reality check section; verify and mark them Done so the queue reflects reality.']);
     const activeByProj = new Map();
     for (const r of road.filter(ACTIVE)) for (const id of parseRefs(r.Project)) activeByProj.set(id, (activeByProj.get(id) || 0) + 1);
+    const unlinked = [...activeByProj.entries()]
+      .map(([id, n]) => ({ p: projects.get(id), n }))
+      .filter(x => x.p && !x.p.repo && x.n >= 1);
+    if (unlinked.length)
+      fixes.push([`${unlinked.length} project${unlinked.length > 1 ? 's' : ''} with active work ha${unlinked.length > 1 ? 've' : 's'} no GitHub link in Notion`,
+        ` (${unlinked.sort((a, b) => b.n - a.n).map(x => shortName(x.p.name)).join(', ')}) — fill the GitHub property on their Projects rows so this page can verify real status.`]);
     for (const [id, n] of activeByProj) {
       const p = projects.get(id);
       if (p && (!p.status || !p.priority) && n >= 3)
@@ -604,13 +814,16 @@
   function renderAll() {
     renderStatus();
     const projects = state.rows.projects ? projectIndex() : null;
+    if (projects) ensureGithubWatches(projects);
+    const shipped = projects ? computeShipped(projects) : new Map();
     const queue = (state.rows.roadmap && projects) ? rankQueue(state.rows.roadmap, projects) : null;
-    renderHero(queue);
+    renderHero(queue, shipped);
     renderGoals();
-    renderQueue(queue, projects);
+    renderQueue(queue, shipped);
+    if (projects) renderGithub(projects, shipped);
     if (projects) renderSplit(projects);
     renderWip();
-    renderHygiene();
+    renderHygiene(shipped);
   }
 
   // ---------- wiring ----------
@@ -620,13 +833,13 @@
       banner.hidden = false;
       banner.textContent = '';
       banner.append(el('strong', null, 'This dashboard needs the claude.ai viewer. '),
-        document.createTextNode('Open it from your Artifacts list on claude.ai so it can read Notion with your connector. A static snapshot lives in the A2operatingsystem repo under dashboards/focus/.'));
+        document.createTextNode('Open it from your Artifacts list on claude.ai so it can read Notion and GitHub with your connectors. A static snapshot lives in the A2operatingsystem repo under dashboards/focus/.'));
       $('freshness').textContent = 'Offline';
       return;
     }
     for (const key of Object.keys(QUERIES)) {
       const input = { data: { data_source_urls: [COLS[key]], query: QUERIES[key] } };
-      const unsub = window.claude.mcp.watchTool(SERVER, TOOL, input, (ev) => {
+      const unsub = window.claude.mcp.watchTool(NOTION, N_TOOL, input, (ev) => {
         if (ev.type === 'data') {
           const payload = ev.result && ev.result.payload;
           const rows = payload && Array.isArray(payload.results) ? payload.results : null;
@@ -649,7 +862,7 @@
     $('refresh').addEventListener('click', () => {
       const btn = $('refresh');
       btn.disabled = true; btn.textContent = 'Refreshing…';
-      window.claude.mcp.invalidate(SERVER, TOOL).catch(() => {});
+      window.claude.mcp.invalidate().catch(() => {});
       setTimeout(() => { btn.disabled = false; btn.textContent = 'Refresh'; }, 30000);
     });
   }

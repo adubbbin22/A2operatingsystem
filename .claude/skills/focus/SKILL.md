@@ -40,25 +40,37 @@ Hub page: `337c5951-aa52-81c2-a1f1-fef4e17ca29d`. Query each data source **separ
    most of the effort.
 5. **Count WIP.** If In Progress > ~10 items, say so plainly — too much WIP is the
    #1 reason prioritization feels impossible.
-6. **Flag data hygiene:** unnamed rows, missing Status/Priority, goals whose
-   Current/Target contradict their Status. Bad inputs make every future ranking worse.
-7. **Write** `dashboards/focus/YYYY-MM-DD.md` with: Do-this-first, Goals table,
-   ranked P0 queue (with Notion links), money-vs-effort table, WIP count, hygiene
-   checklist. Optionally also render an HTML version alongside if the user wants a
-   visual dashboard.
+6. **Reconcile against GitHub (reality check).** For each project whose Notion row has
+   a GitHub URL, pull recent commits (`github` MCP `list_commits`, last 30 days) and
+   match open roadmap items against commit messages (≥ half of an item's meaningful
+   keywords appearing in messages = "likely shipped"). List those as
+   "open in Notion but looks done — verify & mark Done." Note: in remote sessions the
+   github MCP may be scoped to only some repos; report which repos you couldn't check
+   rather than skipping silently. Only update Notion statuses on explicit request.
+7. **Flag data hygiene:** unnamed rows, missing Status/Priority, projects with active
+   work but no GitHub link (they can't be reconciled), goals whose Current/Target
+   contradict their Status. Bad inputs make every future ranking worse.
+8. **Write** `dashboards/focus/YYYY-MM-DD.md` with: Do-this-first, Goals table,
+   ranked P0 queue (with Notion links), GitHub reconciliation results,
+   money-vs-effort table, WIP count, hygiene checklist. Optionally also render an
+   HTML version alongside if the user wants a visual dashboard.
 
 ## Live dashboard (artifact)
 
 A live, interactive version exists as a Claude artifact:
 `https://claude.ai/code/artifact/2d9a1626-7a72-464e-af3e-637d849dc821`
-- Source: `dashboards/focus/live-dashboard.html`. It queries Notion **in the viewer's
-  browser** via the artifact `mcp` capability (connector "Notion", tool
-  `notion-query-data-sources`) — same three queries, ranking computed client-side.
+- Source: `dashboards/focus/live-dashboard.html`. It queries Notion and GitHub **in the
+  viewer's browser** via the artifact `mcp` capability — connector "Notion"
+  (`notion-query-data-sources`, three queries) plus connector "GitHub"
+  (`list_commits` per repo linked on a Projects row). Ranking, shipped?-badges, and
+  hygiene flags are computed client-side.
 - To change it: edit the source file, then republish with the Artifact tool passing
   that `url` so the link stays stable, with capabilities
-  `{"mcp": {"servers": [{"server": "Notion", "tools": ["notion-query-data-sources"]}]}}`.
+  `{"mcp": {"servers": [{"server": "Notion", "tools": ["notion-query-data-sources"]},
+  {"server": "GitHub", "tools": ["list_commits"]}]}}`.
 - It caches results up to 5 min and refreshes on demand (no polling) to respect
-  Notion free-plan query limits.
+  Notion free-plan query limits. The GitHub section only covers repos whose URL is
+  filled in on the Notion Projects row — missing links are flagged as hygiene items.
 
 ## Guardrails
 
