@@ -1,88 +1,64 @@
 ---
 name: focus
 description: >
-  Build the daily focus dashboard from Notion — pull Goals, Projects, Roadmap, and Epics
-  from the App Command Center, rank the most important work, and write a dated dashboard.
-  Use when the user asks what to work on, what's most important, for priorities, a to-do
-  overview, or the focus dashboard.
+  Maintain the everything dashboard — goals, apps, and the ranked ticket queue in
+  focus-site/data/portfolio.json. Use when the user asks what to work on, for priorities,
+  to add/close/update tickets, update goals or app info, or to update the dashboard.
 ---
 
-# focus — what should I work on today?
+# focus — the everything dashboard
 
-One ranked answer to "what's the most important thing," pulled live from Notion.
+Source of truth: **`focus-site/data/portfolio.json`** (goals + apps + tickets).
+The website in `focus-site/` renders it (see its README for deploy). Claude is the
+editor: ticket changes happen here in the repo, not in an external tool.
 
-## Notion sources (App Command Center)
+## Editing rules
 
-Hub page: `337c5951-aa52-81c2-a1f1-fef4e17ca29d`. Query each data source **separately**
-(single-source SQL only — multi-source queries and heavy use hit plan limits):
+- **Tickets**: `{id, title, app, priority (P0/P1/P2), status (In Progress/ToDo/Backlog/Done),
+  type (Bug/Feature/Improvement/Pipeline/Tool), created (YYYY-MM-DD), url?, userAction?}`.
+  - `id` is a stable slug (`app-short-description`); never recycle one.
+  - Closing a ticket = set `status: "Done"` (keep the row for history; prune Done rows
+    older than ~30 days when the file gets noisy).
+  - `userAction: true` marks steps only the user can do (entitlements, account approvals) —
+    the dashboard surfaces them separately.
+- **Apps**: keep `revenueMonthly` current when the user reports numbers; `repo`
+  ("owner/name") powers the GitHub reality check — fill it whenever it comes up.
+  `metrics` stays `null` until the Firebase/BigQuery phase; then write
+  `{installs, dau, revenue7d, asOf}` per app.
+- **Goals**: update `current` when fresh numbers arrive; keep `status` consistent with
+  the numbers (never leave a contradiction like current ≥ target with status "Behind").
+- After edits: bump top-level `updated` (today's date), commit, push. If the Pages
+  project is git-connected the site redeploys itself; otherwise remind the user to run
+  `cd focus-site && npx wrangler pages deploy`.
 
-| Data source | Collection ID | Key columns |
-|---|---|---|
-| Projects | `collection://7ede16cc-f8ad-426a-b74d-239dde761cf5` | Name, Status, Priority, Platform, Monthly Revenue |
-| Roadmap | `collection://0354593e-7f18-4bb2-8e86-634ba701e11a` | Name, Status, Priority, Type, Project, Epic, KPI |
-| Goals | `collection://46d78009-cab3-4fc0-91d4-56aa1d66d20b` | Name, Target, Current, Status, Timeframe |
-| Epics | `collection://65c3318e-a9ff-42e0-b87c-233930ffbeb6` | Name, Status, Priority, Projects |
+## Ranking (what "most important" means)
 
-## Steps
+The dashboard ranks client-side; use the same order when asked verbally:
+1. P0 bugs In Progress (release-blockers first).
+2. Other P0s In Progress — finishing beats starting.
+3. P0 ToDo/Backlog, oldest first.
+4. P1s (In Progress first), then P2s — only when the P0 lane is empty.
+Also surface `userAction` tickets early — they start external clocks.
 
-1. **Pull** all four sources (4 queries total, select only the key columns).
-2. **Rank** open roadmap items (Status ≠ Done) into the "Do next" queue:
-   1. P0 **bugs** blocking a release, in flight first.
-   2. P0 items serving the **most at-risk goal's primary lever** (currently the
-      Subscription & Monetization epic for the $100K/mo goal).
-   3. Remaining P0s **In Progress** — finishing beats starting.
-   4. P0 **ToDo/Backlog**, oldest `createdTime` first.
-   5. P1s only when the P0 lane is empty. Never rank an unnamed item — flag it instead.
-3. **Surface USER ACTION items** (anything whose name/body flags a step only the user can
-   do, e.g. entitlement applications) as a separate "unblock" row — these start clocks.
-4. **Contrast effort vs. money:** active items per project vs. Monthly Revenue per
-   project. Call out revenue leaders with zero active items and $0 projects absorbing
-   most of the effort.
-5. **Count WIP.** If In Progress > ~10 items, say so plainly — too much WIP is the
-   #1 reason prioritization feels impossible.
-6. **Reconcile against GitHub (reality check).** For each project whose Notion row has
-   a GitHub URL, pull recent commits (`github` MCP `list_commits`, last 30 days) and
-   match open roadmap items against commit messages (≥ half of an item's meaningful
-   keywords appearing in messages = "likely shipped"). List those as
-   "open in Notion but looks done — verify & mark Done." Note: in remote sessions the
-   github MCP may be scoped to only some repos; report which repos you couldn't check
-   rather than skipping silently. Only update Notion statuses on explicit request.
-7. **Flag data hygiene:** unnamed rows, missing Status/Priority, projects with active
-   work but no GitHub link (they can't be reconciled), goals whose Current/Target
-   contradict their Status. Bad inputs make every future ranking worse.
-8. **Write** `dashboards/focus/YYYY-MM-DD.md` with: Do-this-first, Goals table,
-   ranked P0 queue (with Notion links), GitHub reconciliation results,
-   money-vs-effort table, WIP count, hygiene checklist. Optionally also render an
-   HTML version alongside if the user wants a visual dashboard.
+## Reality check (GitHub)
 
-## Live dashboard (website)
+When generating a written focus report, cross-check open tickets against recent commits
+(`github` MCP `list_commits`, last 30 days) for each app with a `repo`. ≥ half of a
+ticket's meaningful keywords in commit messages = "likely shipped — verify & close".
+The website does the same live via its `/api/github` proxy.
 
-The standalone website lives in `focus-site/` (Cloudflare Pages: static page + Functions
-proxying Notion/GitHub server-side with secrets; password-gated). Deploy/redeploy steps
-are in `focus-site/README.md`. When changing dashboard logic, keep `focus-site/public/index.html`
-and the artifact source below in sync — same ranking rules, different data layer.
+## Written snapshots
 
-## Live dashboard (artifact)
+On request ("focus report", "what should I work on"), write
+`dashboards/focus/YYYY-MM-DD.md`: Do-this-first, goals, ranked P0 queue, reality-check
+findings, WIP count. Keep it one screen.
 
-A live, interactive version exists as a Claude artifact:
-`https://claude.ai/code/artifact/2d9a1626-7a72-464e-af3e-637d849dc821`
-- Source: `dashboards/focus/live-dashboard.html`. It queries Notion and GitHub **in the
-  viewer's browser** via the artifact `mcp` capability — connector "Notion"
-  (`notion-query-data-sources`, three queries) plus connector "GitHub"
-  (`list_commits` per repo linked on a Projects row). Ranking, shipped?-badges, and
-  hygiene flags are computed client-side.
-- To change it: edit the source file, then republish with the Artifact tool passing
-  that `url` so the link stays stable, with capabilities
-  `{"mcp": {"servers": [{"server": "Notion", "tools": ["notion-query-data-sources"]},
-  {"server": "GitHub", "tools": ["list_commits"]}]}}`.
-- It caches results up to 5 min and refreshes on demand (no polling) to respect
-  Notion free-plan query limits. The GitHub section only covers repos whose URL is
-  filled in on the Notion Projects row — missing links are flagged as hygiene items.
+## Paused: Notion integration
 
-## Guardrails
-
-- Read-only against Notion by default. Fixing hygiene items in Notion (naming rows,
-  setting statuses) only on explicit request.
-- Revenue figures on Projects are self-entered — when RevenueCat is connected,
-  cross-check and note discrepancies rather than silently trusting either.
-- Keep it to one screen. The dashboard's job is one clear #1, not a second backlog.
+Notion was the original source (App Command Center `337c5951-aa52-81c2-a1f1-fef4e17ca29d`;
+data sources — Projects `collection://7ede16cc-f8ad-426a-b74d-239dde761cf5`, Roadmap
+`collection://0354593e-7f18-4bb2-8e86-634ba701e11a`, Goals
+`collection://46d78009-cab3-4fc0-91d4-56aa1d66d20b`, Epics
+`collection://65c3318e-a9ff-42e0-b87c-233930ffbeb6`). A Notion-backed live artifact from
+that era: https://claude.ai/code/artifact/2d9a1626-7a72-464e-af3e-637d849dc821 (superseded
+by the website). Re-enable by querying those sources and merging into portfolio.json.

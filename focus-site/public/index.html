@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>A2 Focus</title>
+<title>A2 — Everything</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -34,13 +34,12 @@
   body { margin: 0; background: var(--page); color: var(--ink);
          font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
   a { color: inherit; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 36px 20px 64px; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 36px 20px 64px; }
 
   .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
              text-transform: uppercase; color: var(--ink-3); margin: 0 0 6px; }
   h1 { font-size: 26px; line-height: 1.2; margin: 0 0 4px; text-wrap: balance; }
   .sub { color: var(--ink-2); margin: 0; font-size: 14px; }
-  .sub a { color: var(--ink-2); }
 
   .statusrow { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
@@ -65,7 +64,6 @@
   .banner { margin-top: 20px; padding: 14px 18px; border-left: 4px solid var(--serious);
             font-size: 13px; color: var(--ink-2); }
   .banner strong { color: var(--ink); }
-  .secerr { font-size: 12px; color: var(--serious); margin: 0 0 10px; }
   .skeleton { padding: 22px 24px; color: var(--ink-3); font-size: 13px; }
   @media (prefers-reduced-motion: no-preference) {
     .skeleton::after { content: "…"; animation: pulse 1.2s ease-in-out infinite; }
@@ -101,6 +99,27 @@
   .pill.neutral { color: var(--ink-2); background: var(--track); }
   .goal .flag { font-size: 12px; color: var(--ink-3); margin-top: 8px; }
 
+  /* apps grid */
+  .apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .app { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .app .top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .app .name { font-size: 14px; font-weight: 700; }
+  .app .plats { font-size: 11px; color: var(--ink-3); }
+  .app .revrow { display: flex; align-items: baseline; gap: 10px; }
+  .app .rev { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .app .rev small { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+  .app .paused { color: var(--ink-3); font-size: 12px; font-weight: 600; }
+  .app .tickets-line { font-size: 12.5px; color: var(--ink-2); }
+  .app .tickets-line button { padding: 2px 8px; margin-left: 6px; font-size: 11px; }
+  .app .repoline { font-size: 12px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .app .repoline a { color: var(--ink-3); }
+  .metricsrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 2px;
+                border-top: 1px solid var(--line); padding-top: 10px; }
+  .metric .mv { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-3); }
+  .metric .mv.has { color: var(--ink); }
+  .metric .ml { font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
+  .app .mnote { font-size: 11px; color: var(--ink-3); }
+
   .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 0 0 12px; }
   .controls .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
                    text-transform: uppercase; color: var(--ink-3); margin-right: 2px; }
@@ -122,7 +141,7 @@
           border: 1px solid var(--line); color: var(--ink-2); }
   .chip.p0 { color: #fff; background: var(--critical); border-color: var(--critical); }
   .chip.p1 { color: var(--serious); border-color: var(--serious); }
-  .chip.app { font-weight: 600; }
+  .chip.app-c { font-weight: 600; }
   .chip.shipped { color: var(--good-text); border-color: var(--good); background: var(--good-tint); }
   .qrow.unblock { border-top: 1px dashed var(--line); background: var(--serious-tint); }
   .qrow.unblock .rank { font-size: 12px; font-weight: 700; color: var(--serious); }
@@ -157,34 +176,10 @@
     .ghrow .last { grid-column: 1 / -1; }
   }
 
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
-  .panel { padding: 16px 18px; }
-  .panel h3 { font-size: 13px; font-weight: 600; margin: 0 0 2px; }
-  .panel .note { font-size: 12px; color: var(--ink-3); margin: 0 0 14px; }
-  .brow { display: grid; grid-template-columns: 118px 1fr 58px; gap: 10px; align-items: center; padding: 5px 0; }
-  .brow:hover { background: color-mix(in srgb, var(--ink) 3%, transparent); }
-  .brow .lbl { font-size: 12.5px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .brow .bar { height: 14px; border-radius: 0 4px 4px 0; min-width: 2px; }
-  .brow .bar.rev { background: var(--accent); }
-  .brow .bar.eff { background: var(--effort); }
-  .brow .bar.zero { background: transparent; border-left: 2px solid var(--ink-3); border-radius: 0; }
-  .brow .val { font-size: 12.5px; font-variant-numeric: tabular-nums; text-align: right; }
-  .takeaway { margin-top: 14px; padding: 12px 18px 12px 14px; border-left: 3px solid var(--effort);
-              font-size: 13px; color: var(--ink-2); max-width: 72ch; }
-  .takeaway strong { color: var(--ink); }
-
   .wip { display: flex; gap: 18px; align-items: center; padding: 16px 20px; flex-wrap: wrap; }
   .wip .big { font-size: 30px; font-weight: 700; line-height: 1; color: var(--serious); }
   .wip .txt { font-size: 13px; color: var(--ink-2); max-width: 58ch; }
   .wip .txt strong { color: var(--ink); }
-
-  .fixes { padding: 6px 0; }
-  .fix { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 10px 18px;
-         border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
-  .fix:first-child { border-top: 0; }
-  .fix .ico { color: var(--serious); font-weight: 700; text-align: center; }
-  .fix strong { color: var(--ink); font-weight: 600; }
 
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line);
            font-size: 12px; color: var(--ink-3); }
@@ -197,9 +192,9 @@
 <body>
 <div class="wrap">
   <header>
-    <p class="eyebrow">A2 Operating System · Focus</p>
-    <h1>What matters today</h1>
-    <p class="sub">Live from your Notion <a href="https://app.notion.com/p/337c5951aa5281c2a1f1fef4e17ca29d">App Command Center</a>, verified against GitHub commit activity</p>
+    <p class="eyebrow">A2 Operating System</p>
+    <h1>Everything</h1>
+    <p class="sub">Goals · apps · tickets, curated by Claude — verified against GitHub commits. Firebase / BigQuery metrics next.</p>
     <div class="statusrow">
       <span class="dot" id="dot"></span>
       <span id="freshness">Loading…</span>
@@ -213,37 +208,31 @@
 
   <section id="sec-goals">
     <h2>Goals</h2>
-    <p class="h2-note">The portfolio's commitments, straight from the Goals database.</p>
-    <div id="goals-err"></div>
     <div class="goals" id="goals"><div class="card skeleton">Loading goals</div></div>
+  </section>
+
+  <section id="sec-apps">
+    <h2>Apps</h2>
+    <p class="h2-note">The whole portfolio. Metric tiles fill in when Firebase / BigQuery are wired.</p>
+    <div class="apps" id="apps"><div class="card skeleton">Loading apps</div></div>
   </section>
 
   <section id="sec-queue">
     <h2>Do next — the P0 lane</h2>
-    <p class="h2-note">Ranked live: release-blocking bugs first, then in-flight P0s (oldest first), then P0 to-dos. Items whose work already shows up in commits get a <strong>shipped?</strong> badge — verify and mark them Done in Notion.</p>
+    <p class="h2-note">Ranked: release-blocking bugs first, then in-flight P0s (oldest first), then P0 to-dos. Items whose work already shows up in commits get a <strong>shipped?</strong> badge.</p>
     <div class="controls" id="controls" hidden>
-      <span class="lbl">Project</span>
+      <span class="lbl">App</span>
       <span id="filterchips" style="display:contents"></span>
       <button id="togglep1" type="button"></button>
     </div>
-    <div id="queue-err"></div>
-    <div class="card queue" id="queue"><div class="skeleton">Loading the roadmap</div></div>
+    <div class="card queue" id="queue"><div class="skeleton">Loading tickets</div></div>
   </section>
 
   <section id="sec-github">
     <h2>Reality check — GitHub</h2>
-    <p class="h2-note">Commit activity in the last 30 days for every repo linked on a Notion project, and open items whose work already appears in commit messages.</p>
-    <div id="gh-err"></div>
-    <div class="card ghgrid" id="ghgrid"><div class="skeleton">Waiting for project repos</div></div>
+    <p class="h2-note">Commit activity in the last 30 days for every app with a linked repo, and open tickets whose work already appears in commit messages.</p>
+    <div class="card ghgrid" id="ghgrid"><div class="skeleton">Waiting for repos</div></div>
     <div class="card shipbox" id="shipbox" hidden></div>
-  </section>
-
-  <section id="sec-split">
-    <h2>Where the money is vs. where the effort is</h2>
-    <p class="h2-note">Revenue per project vs. active roadmap items (in progress + to-do).</p>
-    <div id="split-err"></div>
-    <div class="split" id="split"><div class="card skeleton">Loading projects</div></div>
-    <div class="card takeaway" id="takeaway" hidden></div>
   </section>
 
   <section id="sec-wip" hidden>
@@ -251,16 +240,10 @@
     <div class="card wip" id="wip"></div>
   </section>
 
-  <section id="sec-hygiene" hidden>
-    <h2>Fix your data</h2>
-    <p class="h2-note">Gaps that make every ranking worse. Clean them in Notion and this page gets sharper.</p>
-    <div class="card fixes" id="fixes"></div>
-  </section>
-
   <footer>
-    <p><strong>Ranking rule:</strong> P0 bugs in flight → other in-flight P0s (oldest first) → P0 to-dos (oldest first) → P1s only when the P0 lane is empty. Unnamed items are never ranked — they're flagged above instead.</p>
-    <p><strong>Shipped? badges are a hint, not a verdict:</strong> they mean ≥ half of an item's keywords appear in the repo's recent commit messages. Click through, confirm, then mark it Done in Notion — this page never writes.</p>
-    <p>Served by Cloudflare Pages; Notion and GitHub are read server-side with tokens stored as project secrets. Source and setup: <code>focus-site/</code> in the A2operatingsystem repo.</p>
+    <p><strong>How updates work:</strong> tell Claude "update the tickets" (or "close ss-healthkit-dates", "add a ticket …") in the A2operatingsystem repo — it edits <code>focus-site/data/portfolio.json</code> and pushes; with the Pages project connected to GitHub, the site redeploys itself.</p>
+    <p><strong>Next phase:</strong> Firebase / BigQuery metrics per app (installs, DAU, D1, revenue) land in each app's <code>metrics</code> field and light up the tiles above.</p>
+    <p><strong>Shipped? badges are a hint, not a verdict</strong> — ≥ half of a ticket's keywords appearing in recent commit messages. Confirm before closing.</p>
   </footer>
 </div>
 
@@ -270,9 +253,10 @@
   const SINCE = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
 
   const state = {
-    rows: { projects: null, roadmap: null, goals: null },
-    meta: {}, err: {},
-    gh: new Map(),          // "owner/repo" -> {commits, err, at}
+    data: null,           // portfolio.json
+    err: null,
+    loadedAt: null,
+    gh: new Map(),        // "owner/repo" -> {commits, err}
     filter: 'all', showP1: false,
   };
   const ghRequested = new Set();
@@ -286,16 +270,8 @@
   };
   const fmtMoney = (n) => n >= 1000 ? '$' + (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : '$' + Math.round(n);
   const fmtNum = (n) => n >= 1000 ? (n / 1000).toFixed(n % 1000 ? 1 : 0) + 'K' : String(n);
-  const hexId = (u) => { const m = /([0-9a-f]{32})/.exec(u || ''); return m ? m[1] : null; };
-  const parseRefs = (s) => { try { const a = JSON.parse(s || '[]'); return Array.isArray(a) ? a.map(hexId).filter(Boolean) : []; } catch { return []; } };
-  const parseRepo = (u) => { const m = /github\.com\/([^\/\s]+)\/([^\/\s#?]+?)(?:\.git)?(?:[\/#?].*)?$/.exec(u || ''); return m ? { owner: m[1], repo: m[2] } : null; };
   const daysAgo = (iso) => { const d = (Date.now() - Date.parse(iso)) / 864e5; return d < 1 ? 'today' : d < 2 ? 'yesterday' : Math.floor(d) + 'd ago'; };
-  const shortName = (n) => (n || '')
-    .replace(/^\[DEPRECATED[^\]]*\]\s*/, '')
-    .replace(/ (App|Apps)$/, '')
-    .replace('Russian Radio Push Automation', 'RU Push Automation');
 
-  // ---------- auth + fetch layer ----------
   const KEY_STORE = 'a2focus_key';
   function getKey() { return localStorage.getItem(KEY_STORE) || ''; }
   function askKey(force) {
@@ -305,80 +281,39 @@
     localStorage.setItem(KEY_STORE, v);
     return true;
   }
-  async function api(path, opts) {
-    const res = await fetch(path, {
-      ...opts,
-      headers: { ...((opts && opts.headers) || {}), 'x-dash-key': getKey(), 'content-type': 'application/json' },
-    });
+  async function api(path) {
+    const res = await fetch(path, { headers: { 'x-dash-key': getKey() } });
     let data = null;
-    try { data = await res.json(); } catch { /* non-json error body */ }
+    try { data = await res.json(); } catch { /* ignore */ }
     if (res.status === 401) { const e = new Error('unauthorized'); e.unauthorized = true; throw e; }
     if (!res.ok) throw new Error((data && data.error) || ('HTTP ' + res.status));
     return data;
   }
 
-  // ---------- header status ----------
-  function renderStatus() {
-    const errs = Object.values(state.err).filter(Boolean);
-    const loaded = Object.values(state.rows).filter(Boolean).length;
-    const dot = $('dot'), fresh = $('freshness'), banner = $('banner');
-    if (errs.length === 3) {
-      dot.className = 'dot err';
-      fresh.textContent = 'Not connected';
-      banner.hidden = false; banner.textContent = '';
-      banner.append(el('strong', null, 'Live data unavailable. '), document.createTextNode(errs[0]));
-      return;
-    }
-    banner.hidden = true;
-    if (!loaded) { dot.className = 'dot'; fresh.textContent = 'Loading…'; return; }
-    dot.className = 'dot live';
-    const stamps = Object.values(state.meta).map(m => m && m.storedAt).filter(Boolean);
-    fresh.textContent = stamps.length
-      ? `Data as of ${new Date(Math.min(...stamps)).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
-      : 'Live';
-  }
-  function sectionErr(key, container) {
-    container.textContent = '';
-    if (state.err[key]) container.append(el('p', 'secerr', '⚠ ' + state.err[key]));
-  }
+  // ---------- derived ----------
+  const appById = () => new Map((state.data.apps || []).map(a => [a.id, a]));
+  const OPEN = (t) => t.status !== 'Done';
+  const ACTIVE = (t) => t.status === 'In Progress' || t.status === 'ToDo';
+  const openTickets = () => (state.data.tickets || []).filter(OPEN);
 
-  // ---------- derived data ----------
-  function projectIndex() {
-    const map = new Map();
-    for (const p of state.rows.projects || []) {
-      const id = hexId(p.url);
-      if (!id || /^\[DEPRECATED/.test(p.Name || '') || p.Status === 'Archived') continue;
-      map.set(id, { id, name: p.Name || 'Unnamed project', revenue: p['Monthly Revenue'] || 0,
-                    status: p.Status, priority: p.Priority, url: p.url,
-                    repo: parseRepo(p.GitHub) });
-    }
-    return map;
-  }
-  const OPEN = (r) => r.Status !== 'Done';
-  const ACTIVE = (r) => r.Status === 'In Progress' || r.Status === 'ToDo';
-
-  function rankQueue(roadmap, projects) {
-    const open = roadmap.filter(r => OPEN(r) && r.Name);
-    const withProj = (r) => ({
-      ...r,
-      projIds: parseRefs(r.Project),
-      projNames: parseRefs(r.Project).map(id => projects.get(id) && projects.get(id).name).filter(Boolean),
-      created: Date.parse(r.createdTime || '') || 0,
-    });
-    const byAge = (a, b) => a.created - b.created;
-    const p0 = open.filter(r => r.Priority === 'P0').map(withProj);
+  function rankQueue() {
+    const open = openTickets();
+    const byAge = (a, b) => (Date.parse(a.created || '') || 0) - (Date.parse(b.created || '') || 0);
+    const p0 = open.filter(t => t.priority === 'P0');
     const lanes = [
-      p0.filter(r => r.Status === 'In Progress' && r.Type === 'Bug').sort(byAge),
-      p0.filter(r => r.Status === 'In Progress' && r.Type !== 'Bug').sort(byAge),
-      p0.filter(r => r.Status !== 'In Progress').sort(byAge),
+      p0.filter(t => t.status === 'In Progress' && t.type === 'Bug').sort(byAge),
+      p0.filter(t => t.status === 'In Progress' && t.type !== 'Bug').sort(byAge),
+      p0.filter(t => t.status !== 'In Progress').sort(byAge),
     ];
-    const p1 = open.filter(r => r.Priority === 'P1').map(withProj)
-      .sort((a, b) => (a.Status === 'In Progress' ? 0 : 1) - (b.Status === 'In Progress' ? 0 : 1) || byAge(a, b));
-    const unblocks = roadmap.filter(r => OPEN(r) && /USER ACTION/i.test(r.Name || '')).map(withProj);
-    return { p0: lanes.flat(), p1, unblocks };
+    const rest = open.filter(t => t.priority === 'P1' || t.priority === 'P2')
+      .sort((a, b) => (a.priority === b.priority ? 0 : a.priority === 'P1' ? -1 : 1)
+        || (a.status === 'In Progress' ? 0 : 1) - (b.status === 'In Progress' ? 0 : 1)
+        || byAge(a, b));
+    const unblocks = open.filter(t => t.userAction);
+    return { p0: lanes.flat(), rest, unblocks };
   }
 
-  // ---------- github reconciliation ----------
+  // ---------- github ----------
   const STOP = new Set(['the','and','for','with','from','into','that','this','all','are','was','has','have','not',
     'add','fix','bug','new','app','apps','ios','android','web','screen','screens','improve','improvement','feature',
     'update','support','user','users','round','turn','turns','next','after','when','your','out','via']);
@@ -388,68 +323,279 @@
     .split(/\s+/)
     .filter(t => t.length >= 3 && !STOP.has(t) && !/^\d+$/.test(t));
 
-  function computeShipped(projects) {
+  function computeShipped() {
     const flags = new Map();
-    if (!state.rows.roadmap) return flags;
-    const haystacks = new Map();
-    for (const [key, entry] of state.gh) {
-      if (entry.commits && entry.commits.length)
-        haystacks.set(key, entry.commits.map(c => (c.commit && c.commit.message || '').toLowerCase()));
-    }
-    if (!haystacks.size) return flags;
-    for (const r of state.rows.roadmap.filter(x => ACTIVE(x) && x.Name)) {
-      const T = tokens(r.Name);
+    if (!state.data) return flags;
+    const apps = appById();
+    for (const t of openTickets().filter(x => ACTIVE(x))) {
+      const app = t.app && apps.get(t.app);
+      if (!app || !app.repo) continue;
+      const entry = state.gh.get(app.repo);
+      if (!entry || !entry.commits || !entry.commits.length) continue;
+      const msgs = entry.commits.map(c => (c.commit && c.commit.message || '').toLowerCase());
+      const T = tokens(t.title);
       if (T.length < 2) continue;
-      for (const id of parseRefs(r.Project)) {
-        const p = projects.get(id);
-        if (!p || !p.repo) continue;
-        const key = p.repo.owner + '/' + p.repo.repo;
-        const msgs = haystacks.get(key);
-        if (!msgs) continue;
-        const joined = msgs.join('\n');
-        const matched = T.filter(t => joined.includes(t));
-        if (matched.length >= 2 && matched.length / T.length >= 0.5) {
-          const evIdx = msgs.findIndex(m => matched.some(t => m.includes(t)));
-          const entry = state.gh.get(key);
-          flags.set(r.url, { repoKey: key, evidence: entry.commits[Math.max(0, evIdx)] });
-          break;
-        }
+      const joined = msgs.join('\n');
+      const matched = T.filter(tok => joined.includes(tok));
+      if (matched.length >= 2 && matched.length / T.length >= 0.5) {
+        const evIdx = msgs.findIndex(m => matched.some(tok => m.includes(tok)));
+        flags.set(t.id, { repoKey: app.repo, evidence: entry.commits[Math.max(0, evIdx)] });
       }
     }
     return flags;
   }
 
-  function loadGithub(projects) {
-    for (const p of projects.values()) {
-      if (!p.repo) continue;
-      const key = p.repo.owner + '/' + p.repo.repo;
-      if (ghRequested.has(key)) continue;
-      ghRequested.add(key);
-      api(`/api/github?repo=${encodeURIComponent(key)}&since=${SINCE}`)
-        .then(commits => { state.gh.set(key, { commits: Array.isArray(commits) ? commits : [], err: null, at: Date.now() }); renderAll(); })
-        .catch(e => { state.gh.set(key, { commits: null, err: e.unauthorized ? 'unauthorized' : e.message, at: Date.now() }); renderAll(); });
+  function loadGithub() {
+    for (const a of state.data.apps || []) {
+      if (!a.repo || ghRequested.has(a.repo)) continue;
+      ghRequested.add(a.repo);
+      api(`/api/github?repo=${encodeURIComponent(a.repo)}&since=${SINCE}`)
+        .then(commits => { state.gh.set(a.repo, { commits: Array.isArray(commits) ? commits : [], err: null }); renderAll(); })
+        .catch(e => { state.gh.set(a.repo, { commits: null, err: e.unauthorized ? 'unauthorized' : e.message }); renderAll(); });
     }
   }
 
-  function renderGithub(projects, shipped) {
-    const grid = $('ghgrid'), errBox = $('gh-err'), shipbox = $('shipbox');
-    errBox.textContent = '';
-    if (!projects) return;
-    const linked = [...projects.values()].filter(p => p.repo);
-    grid.textContent = '';
-    if (!linked.length) {
-      grid.append(el('div', 'empty', 'No Notion project has a GitHub link yet — fill the GitHub property on Projects rows to activate this section.'));
+  // ---------- renderers ----------
+  function renderStatus() {
+    const dot = $('dot'), fresh = $('freshness'), banner = $('banner');
+    if (state.err) {
+      dot.className = 'dot err'; fresh.textContent = 'Not connected';
+      banner.hidden = false; banner.textContent = '';
+      banner.append(el('strong', null, 'Data unavailable. '), document.createTextNode(state.err));
       return;
     }
-    for (const p of linked.sort((a, b) => b.revenue - a.revenue || a.name.localeCompare(b.name))) {
-      const key = p.repo.owner + '/' + p.repo.repo;
-      const entry = state.gh.get(key);
+    banner.hidden = true;
+    if (!state.data) { dot.className = 'dot'; fresh.textContent = 'Loading…'; return; }
+    dot.className = 'dot live';
+    fresh.textContent = `Tickets updated ${state.data.updated} by Claude · loaded ${new Date(state.loadedAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+  }
+
+  function whyText(t) {
+    if (t.type === 'Bug' && t.status === 'In Progress')
+      return 'A P0 bug already in flight — broken behavior in front of users outranks every feature. Finish and ship it.';
+    if (t.status === 'In Progress')
+      return 'P0 and already started — finishing beats starting anything new.';
+    return 'The oldest unstarted P0 — it has waited longest and nothing above it is free.';
+  }
+
+  function renderHero(queue, shipped) {
+    const sec = $('sec-hero'); sec.textContent = '';
+    if (!queue) { sec.append(el('div', 'card skeleton', 'Loading your top priority')); return; }
+    const top = queue.p0.filter(t => !shipped.has(t.id))[0] || queue.rest.filter(t => !shipped.has(t.id))[0];
+    const card = el('div', 'card hero');
+    card.append(el('p', 'eyebrow', 'Do this first'));
+    if (!top) {
+      card.append(el('h3', null, 'The P0 lane is empty 🎉'),
+        el('p', null, 'Nothing at P0 is open. Either celebrate, or promote the most important P1 — the queue below is already ranked.'));
+    } else {
+      const h = el('h3');
+      const a = el('a', null, top.title);
+      if (top.url) a.href = top.url; else a.removeAttribute('href');
+      h.append(a); card.append(h);
+      const app = top.app && appById().get(top.app);
+      if (app) card.append(el('p', null, app.name));
+      const why = el('p', 'why');
+      why.append(el('strong', null, 'Why it’s #1: '), document.createTextNode(whyText(top)));
+      card.append(why);
+    }
+    sec.append(card);
+  }
+
+  function renderGoals() {
+    const wrapEl = $('goals');
+    if (!state.data) return;
+    wrapEl.textContent = '';
+    const cls = { 'On Track': 'good', 'Achieved': 'good', 'Behind': 'serious', 'At Risk': 'critical' };
+    const bar = { 'On Track': 'var(--good)', 'Achieved': 'var(--good)', 'Behind': 'var(--serious)', 'At Risk': 'var(--critical)' };
+    for (const g of state.data.goals || []) {
+      const card = el('div', 'card goal');
+      card.append(el('p', 'name', g.name));
+      const money = g.unit === 'money';
+      const fig = el('div', 'fig', (money ? fmtMoney(g.current || 0) : fmtNum(g.current || 0)) + ' ');
+      fig.append(el('small', null, 'of ' + (money ? fmtMoney(g.target || 0) : fmtNum(g.target || 0))));
+      card.append(fig);
+      const pct = g.target ? Math.min(100, Math.round((g.current || 0) / g.target * 100)) : 0;
+      const meter = el('div', 'meter'); const fill = el('i');
+      fill.style.width = pct + '%'; fill.style.background = bar[g.status] || 'var(--accent)';
+      meter.append(fill); card.append(meter);
+      const foot = el('div', 'foot');
+      foot.append(el('span', null, pct + '% there' + (g.due ? ' · due ' + g.due : '')),
+        el('span', 'pill ' + (cls[g.status] || 'neutral'), g.status || 'No status'));
+      card.append(foot);
+      if (g.note) card.append(el('p', 'flag', g.note));
+      wrapEl.append(card);
+    }
+  }
+
+  function renderApps() {
+    const grid = $('apps');
+    if (!state.data) return;
+    grid.textContent = '';
+    const perApp = new Map();
+    for (const t of openTickets()) if (t.app) perApp.set(t.app, (perApp.get(t.app) || 0) + 1);
+    const apps = [...(state.data.apps || [])].sort((a, b) =>
+      (a.status === 'Paused' ? 1 : 0) - (b.status === 'Paused' ? 1 : 0)
+      || (b.revenueMonthly || 0) - (a.revenueMonthly || 0)
+      || (perApp.get(b.id) || 0) - (perApp.get(a.id) || 0));
+
+    for (const a of apps) {
+      const card = el('div', 'card app');
+      const top = el('div', 'top');
+      top.append(el('span', 'name', a.name), el('span', 'plats', (a.platforms || []).join(' · ')));
+      card.append(top);
+
+      const revrow = el('div', 'revrow');
+      if (a.status === 'Paused') {
+        revrow.append(el('span', 'paused', 'Paused'));
+      } else if (a.revenueMonthly > 0) {
+        const rev = el('span', 'rev', fmtMoney(a.revenueMonthly) + ' ');
+        rev.append(el('small', null, '/ mo'));
+        revrow.append(rev);
+      } else {
+        const rev = el('span', 'rev', '$0 ');
+        rev.append(el('small', null, '/ mo — pre-revenue'));
+        revrow.append(rev);
+      }
+      if (a.priority) revrow.append(el('span', 'chip', a.priority));
+      card.append(revrow);
+
+      const n = perApp.get(a.id) || 0;
+      const tl = el('div', 'tickets-line');
+      tl.append(document.createTextNode(n ? `${n} open ticket${n > 1 ? 's' : ''}` : 'No open tickets'));
+      if (n) {
+        const b = el('button', null, 'view');
+        b.type = 'button';
+        b.addEventListener('click', () => {
+          state.filter = a.id; renderAll();
+          $('sec-queue').scrollIntoView({ behavior: 'smooth' });
+        });
+        tl.append(b);
+      }
+      card.append(tl);
+
+      const repoLine = el('div', 'repoline');
+      if (a.repo) {
+        const ra = el('a', null, a.repo);
+        ra.href = 'https://github.com/' + a.repo;
+        repoLine.append(ra);
+        const entry = state.gh.get(a.repo);
+        if (entry && entry.commits && entry.commits.length) {
+          const c = entry.commits[0];
+          repoLine.append(document.createTextNode(` · last commit ${daysAgo(c.commit.author && c.commit.author.date)}`));
+        }
+      } else {
+        repoLine.textContent = 'No repo linked — add one in portfolio.json for the reality check';
+      }
+      card.append(repoLine);
+
+      const m = a.metrics || {};
+      const row = el('div', 'metricsrow');
+      for (const [key, label] of [['installs', 'Installs 7d'], ['dau', 'DAU'], ['revenue7d', 'Revenue 7d']]) {
+        const cell = el('div', 'metric');
+        const has = m && m[key] != null;
+        cell.append(el('div', 'mv' + (has ? ' has' : ''), has ? String(m[key]) : '—'));
+        cell.append(el('div', 'ml', label));
+        row.append(cell);
+      }
+      card.append(row);
+      if (!a.metrics) card.append(el('div', 'mnote', 'Firebase / BigQuery — next phase'));
+      grid.append(card);
+    }
+  }
+
+  function queueRow(t, rankLabel, isNow, shippedFlag) {
+    const row = el('div', 'qrow' + (isNow ? ' now' : ''));
+    row.append(el('span', 'rank', rankLabel));
+    const mid = el('span'); const tt = el('span', 't');
+    const a = el('a', null, t.title);
+    if (t.url) a.href = t.url;
+    tt.append(a); mid.append(tt);
+    if (rankLabel === '1') mid.append(el('div', 'd', whyText(t)));
+    if (shippedFlag) mid.append(el('div', 'd', 'Recent commits in ' + shippedFlag.repoKey + ' look like this work — verify, then tell Claude to close it.'));
+    row.append(mid);
+    const chips = el('span', 'chips');
+    if (shippedFlag) chips.append(el('span', 'chip shipped', '✓ shipped?'));
+    chips.append(el('span', 'chip ' + (t.priority === 'P0' ? 'p0' : t.priority === 'P1' ? 'p1' : ''), t.priority || '—'));
+    chips.append(el('span', 'chip', (t.type ? t.type + ' · ' : '') + (t.status || '—')));
+    const app = t.app && appById().get(t.app);
+    chips.append(el('span', 'chip app-c', app ? app.name : 'Portfolio'));
+    row.append(chips);
+    return row;
+  }
+
+  function renderQueue(queue, shipped) {
+    const box = $('queue');
+    if (!queue) return;
+    box.textContent = '';
+
+    const apps = appById();
+    const counts = new Map();
+    for (const t of [...queue.p0, ...queue.rest]) {
+      const key = t.app || 'portfolio';
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+    const chipsBox = $('filterchips'); chipsBox.textContent = '';
+    const mkChip = (label, value, n) => {
+      const b = el('button', state.filter === value ? 'on' : '', n === undefined ? label : `${label} (${n})`);
+      b.type = 'button';
+      b.addEventListener('click', () => { state.filter = value; renderAll(); });
+      chipsBox.append(b);
+    };
+    mkChip('All', 'all');
+    [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5)
+      .forEach(([id, n]) => mkChip(apps.get(id) ? apps.get(id).name : 'Portfolio', id, n));
+    const tp1 = $('togglep1');
+    tp1.textContent = (state.showP1 ? 'Hide' : 'Show') + ` P1/P2 lane (${queue.rest.length})`;
+    tp1.className = state.showP1 ? 'on' : '';
+    tp1.onclick = () => { state.showP1 = !state.showP1; renderAll(); };
+    $('controls').hidden = false;
+
+    const match = (t) => state.filter === 'all' || (t.app || 'portfolio') === state.filter;
+    let rank = 0, shown = 0;
+    for (const t of queue.p0) {
+      rank++;
+      if (!match(t)) continue;
+      box.append(queueRow(t, String(rank), t.status === 'In Progress', shipped.get(t.id)));
+      shown++;
+    }
+    if (!shown) {
+      const name = state.filter === 'all' ? null : (apps.get(state.filter) ? apps.get(state.filter).name : 'this app');
+      box.append(el('div', 'empty', name ? `No open P0 tickets on ${name}.` : 'No open P0 tickets — the lane is clear.'));
+    }
+    if (state.showP1) {
+      let r1 = 0;
+      for (const t of queue.rest) {
+        r1++;
+        if (!match(t)) continue;
+        box.append(queueRow(t, t.priority + '·' + r1, false, shipped.get(t.id)));
+      }
+    }
+    for (const t of queue.unblocks.filter(match)) {
+      const row = queueRow(t, 'YOU', false, null);
+      row.classList.add('unblock');
+      row.querySelector('.t').after(el('div', 'd', 'Flagged USER ACTION — only you can do this step, and it starts an external clock. Do it early.'));
+      row.classList.remove('now');
+      box.append(row);
+    }
+  }
+
+  function renderGithub(shipped) {
+    const grid = $('ghgrid'), shipbox = $('shipbox');
+    if (!state.data) return;
+    const linked = (state.data.apps || []).filter(a => a.repo);
+    grid.textContent = '';
+    if (!linked.length) {
+      grid.append(el('div', 'empty', 'No app has a repo linked yet — add "repo": "owner/name" in portfolio.json.'));
+      return;
+    }
+    for (const a of linked) {
+      const entry = state.gh.get(a.repo);
       const row = el('div', 'ghrow');
       const left = el('span');
-      left.append(el('div', 'proj', shortName(p.name)));
+      left.append(el('div', 'proj', a.name));
       const repoLine = el('div', 'repo');
-      const ra = el('a', null, key);
-      ra.href = 'https://github.com/' + key;
+      const ra = el('a', null, a.repo);
+      ra.href = 'https://github.com/' + a.repo;
       repoLine.append(ra); left.append(repoLine);
       row.append(left);
 
@@ -459,9 +605,9 @@
         const n = entry.commits.length;
         if (n) {
           const c = entry.commits[0];
-          const a = el('a', null, (c.commit.message || '').split('\n')[0]);
-          a.href = c.html_url;
-          last.append(a);
+          const la = el('a', null, (c.commit.message || '').split('\n')[0]);
+          la.href = c.html_url;
+          last.append(la);
           act.textContent = '';
           act.append(el('strong', null, String(n)), document.createTextNode(` commits · last ${daysAgo(c.commit.author && c.commit.author.date)}`));
         } else {
@@ -470,7 +616,7 @@
           act.textContent = 'quiet';
         }
       } else if (entry && entry.err) {
-        last.textContent = entry.err;
+        last.textContent = entry.err === 'unauthorized' ? 'Wrong password' : entry.err;
         last.style.color = 'var(--ink-3)';
         act.textContent = '—';
       } else {
@@ -483,16 +629,17 @@
     }
 
     shipbox.hidden = true;
-    if (shipped && shipped.size && state.rows.roadmap) {
+    if (shipped && shipped.size) {
       shipbox.hidden = false; shipbox.textContent = '';
-      shipbox.append(el('div', 'head', `Open in Notion, but the commits say otherwise (${shipped.size})`));
-      for (const r of state.rows.roadmap.filter(x => shipped.has(x.url))) {
-        const f = shipped.get(r.url);
+      shipbox.append(el('div', 'head', `Open tickets the commits say are done (${shipped.size})`));
+      for (const t of openTickets().filter(x => shipped.has(x.id))) {
+        const f = shipped.get(t.id);
         const row = el('div', 'shiprow');
         row.append(el('span', 'ico', '✓'));
         const s = el('span');
-        const a = el('a', null, r.Name); a.href = r.url; s.append(a);
-        s.append(document.createTextNode(` — still "${r.Status}" in Notion.`));
+        const a = el('a', null, t.title);
+        if (t.url) a.href = t.url;
+        s.append(a, document.createTextNode(` — still "${t.status}".`));
         const ev = el('div', 'ev');
         const evA = el('a', null, 'Matching commit in ' + f.repoKey + ': “' + (f.evidence.commit.message || '').split('\n')[0] + '”');
         evA.href = f.evidence.html_url; evA.style.color = 'var(--ink-3)';
@@ -503,202 +650,22 @@
     }
   }
 
-  // ---------- renderers ----------
-  function whyText(item) {
-    if (item.Type === 'Bug' && item.Status === 'In Progress')
-      return 'A P0 bug already in flight — broken behavior in front of users outranks every feature. Finish and ship it.';
-    if (item.Status === 'In Progress')
-      return 'P0 and already started — finishing beats starting anything new.';
-    return 'The oldest unstarted P0 — it has waited longest and nothing above it is free.';
-  }
-
-  function renderHero(queue, shipped) {
-    const sec = $('sec-hero'); sec.textContent = '';
-    if (!queue) { sec.append(el('div', 'card skeleton', 'Loading your top priority')); return; }
-    const unshipped = queue.p0.filter(i => !shipped.has(i.url));
-    const top = unshipped[0] || queue.p1.filter(i => !shipped.has(i.url))[0];
-    const card = el('div', 'card hero');
-    card.append(el('p', 'eyebrow', 'Do this first'));
-    if (!top) {
-      card.append(el('h3', null, 'The P0 lane is empty 🎉'),
-        el('p', null, 'Nothing at P0 is open. Either celebrate, or promote the most important P1 — the queue below is already ranked.'));
-    } else {
-      const h = el('h3'); const a = el('a', null, top.Name);
-      a.href = top.url; h.append(a); card.append(h);
-      if (top.projNames.length) card.append(el('p', null, top.projNames.join(' · ')));
-      const why = el('p', 'why');
-      why.append(el('strong', null, 'Why it’s #1: '), document.createTextNode(whyText(top)));
-      card.append(why);
-    }
-    sec.append(card);
-  }
-
-  function renderGoals() {
-    const wrapEl = $('goals'); sectionErr('goals', $('goals-err'));
-    const rows = state.rows.goals;
-    if (!rows) return;
-    wrapEl.textContent = '';
-    const cls = { 'On Track': 'good', 'Achieved': 'good', 'Behind': 'serious', 'At Risk': 'critical' };
-    const bar = { 'On Track': 'var(--good)', 'Achieved': 'var(--good)', 'Behind': 'var(--serious)', 'At Risk': 'var(--critical)' };
-    for (const g of rows.filter(r => r.Name)) {
-      const card = el('div', 'card goal');
-      card.append(el('p', 'name', g.Name));
-      const money = /\$/.test(g.Name) || (g.Target || 0) >= 50000;
-      const fig = el('div', 'fig', money ? fmtMoney(g.Current || 0) + ' ' : fmtNum(g.Current || 0) + ' ');
-      fig.append(el('small', null, 'of ' + (money ? fmtMoney(g.Target || 0) : fmtNum(g.Target || 0))));
-      card.append(fig);
-      const pct = g.Target ? Math.min(100, Math.round((g.Current || 0) / g.Target * 100)) : 0;
-      const meter = el('div', 'meter'); const fill = el('i');
-      fill.style.width = pct + '%'; fill.style.background = bar[g.Status] || 'var(--accent)';
-      meter.append(fill); card.append(meter);
-      const foot = el('div', 'foot');
-      foot.append(el('span', null, pct + '% there'),
-        el('span', 'pill ' + (cls[g.Status] || 'neutral'), g.Status || 'No status'));
-      card.append(foot);
-      if ((g.Status === 'Behind' || g.Status === 'At Risk') && g.Target && (g.Current || 0) >= g.Target)
-        card.append(el('p', 'flag', '⚠ Contradiction — current meets target but status says ' + g.Status + '. Fix one in Notion.'));
-      wrapEl.append(card);
-    }
-    if (!wrapEl.children.length) wrapEl.append(el('div', 'card skeleton', 'No named goals found'));
-  }
-
-  function queueRow(item, rankLabel, isNow, shippedFlag) {
-    const row = el('div', 'qrow' + (isNow ? ' now' : ''));
-    row.append(el('span', 'rank', rankLabel));
-    const mid = el('span'); const t = el('span', 't');
-    const a = el('a', null, item.Name); a.href = item.url; t.append(a); mid.append(t);
-    if (rankLabel === '1') mid.append(el('div', 'd', whyText(item)));
-    if (shippedFlag) mid.append(el('div', 'd', 'Recent commits in ' + shippedFlag.repoKey + ' look like this work — verify and mark it Done.'));
-    row.append(mid);
-    const chips = el('span', 'chips');
-    if (shippedFlag) chips.append(el('span', 'chip shipped', '✓ shipped?'));
-    chips.append(el('span', 'chip ' + (item.Priority === 'P0' ? 'p0' : item.Priority === 'P1' ? 'p1' : ''), item.Priority || '—'));
-    chips.append(el('span', 'chip', (item.Type ? item.Type + ' · ' : '') + (item.Status || 'No status')));
-    if (item.projNames.length) chips.append(el('span', 'chip app', item.projNames.map(shortName).join(', ')));
-    row.append(chips);
-    return row;
-  }
-
-  function renderQueue(queue, shipped) {
-    const box = $('queue'); sectionErr('roadmap', $('queue-err'));
-    if (!queue) return;
-    box.textContent = '';
-
-    const counts = new Map();
-    for (const it of [...queue.p0, ...queue.p1])
-      for (const n of it.projNames) counts.set(n, (counts.get(n) || 0) + 1);
-    const chipsBox = $('filterchips'); chipsBox.textContent = '';
-    const mkChip = (label, value, n) => {
-      const b = el('button', state.filter === value ? 'on' : '', n === undefined ? label : `${label} (${n})`);
-      b.type = 'button';
-      b.addEventListener('click', () => { state.filter = value; renderAll(); });
-      chipsBox.append(b);
-    };
-    mkChip('All', 'all');
-    [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5)
-      .forEach(([name, n]) => mkChip(shortName(name), name, n));
-    const tp1 = $('togglep1');
-    tp1.textContent = (state.showP1 ? 'Hide' : 'Show') + ` P1 lane (${queue.p1.length})`;
-    tp1.className = state.showP1 ? 'on' : '';
-    tp1.onclick = () => { state.showP1 = !state.showP1; renderAll(); };
-    $('controls').hidden = false;
-
-    const match = (it) => state.filter === 'all' || it.projNames.includes(state.filter);
-    let rank = 0, shown = 0;
-    for (const it of queue.p0) {
-      rank++;
-      if (!match(it)) continue;
-      box.append(queueRow(it, String(rank), it.Status === 'In Progress', shipped.get(it.url)));
-      shown++;
-    }
-    if (!shown) box.append(el('div', 'empty', state.filter === 'all'
-      ? 'No open P0 items — the lane is clear.'
-      : `No open P0 items on ${shortName(state.filter)}.`));
-
-    if (state.showP1) {
-      let r1 = 0;
-      for (const it of queue.p1) {
-        r1++;
-        if (!match(it)) continue;
-        box.append(queueRow(it, 'P1·' + r1, false, shipped.get(it.url)));
-      }
-    }
-    for (const it of queue.unblocks.filter(match)) {
-      const row = queueRow(it, 'YOU', false, null);
-      row.classList.add('unblock');
-      row.querySelector('.t').after(el('div', 'd', 'Flagged USER ACTION in Notion — only you can do this step, and it starts an external clock. Do it early.'));
-      row.classList.remove('now');
-      box.append(row);
-    }
-  }
-
-  function barRows(panel, items, max, kind, fmt) {
-    for (const it of items) {
-      const row = el('div', 'brow');
-      row.append(el('span', 'lbl', shortName(it.name)));
-      const bar = el('span', 'bar ' + (it.value > 0 ? kind : 'zero'));
-      if (it.value > 0 && max > 0) bar.style.width = Math.max(4, Math.round(it.value / max * 100)) + '%';
-      row.append(bar, el('span', 'val', fmt(it.value)));
-      panel.append(row);
-    }
-  }
-
-  function renderSplit(projects) {
-    const box = $('split'); sectionErr('projects', $('split-err'));
-    const proj = state.rows.projects, road = state.rows.roadmap;
-    if (!proj || !road) return;
-    box.textContent = '';
-    const activeByProj = new Map();
-    for (const r of road.filter(ACTIVE))
-      for (const id of parseRefs(r.Project)) activeByProj.set(id, (activeByProj.get(id) || 0) + 1);
-
-    const entries = [...projects.values()].map(p => ({
-      name: p.name, revenue: p.revenue, active: activeByProj.get(p.id) || 0,
-    })).filter(p => p.revenue > 0 || p.active > 0);
-
-    const revSorted = [...entries].sort((a, b) => b.revenue - a.revenue);
-    const effSorted = [...entries].sort((a, b) => b.active - a.active);
-    const revMax = Math.max(...entries.map(e => e.revenue), 1);
-    const effMax = Math.max(...entries.map(e => e.active), 1);
-    const totalRev = entries.reduce((s, e) => s + e.revenue, 0);
-    const totalActive = entries.reduce((s, e) => s + e.active, 0);
-
-    const p1 = el('div', 'card panel');
-    p1.append(el('h3', null, 'Monthly revenue'), el('p', 'note', fmtMoney(totalRev) + ' total, per Notion Projects'));
-    barRows(p1, revSorted.map(e => ({ name: e.name, value: e.revenue })), revMax, 'rev', fmtMoney);
-    const p2 = el('div', 'card panel');
-    p2.append(el('h3', null, 'Active roadmap items'), el('p', 'note', totalActive + ' open items, per Notion Roadmap'));
-    barRows(p2, effSorted.map(e => ({ name: e.name, value: e.active })), effMax, 'eff', String);
-    box.append(p1, p2);
-
-    const tk = $('takeaway'); tk.hidden = true;
-    const idleTop = revSorted.find(e => e.active === 0 && e.revenue > 0);
-    const busiest = effSorted[0];
-    if (idleTop && busiest && totalRev > 0) {
-      tk.hidden = false; tk.textContent = '';
-      const share = Math.round(idleTop.revenue / totalRev * 100);
-      tk.append(el('strong', null, `${share}% of your revenue (${shortName(idleTop.name)}, ${fmtMoney(idleTop.revenue)}/mo) has zero active roadmap items`),
-        document.createTextNode(`, while the most active project is ${shortName(busiest.name)} (${busiest.active} items, ${fmtMoney(busiest.revenue)}/mo). Betting on new apps is fine — just make protecting the top earner a deliberate choice.`));
-    }
-  }
-
   function renderWip() {
-    const road = state.rows.roadmap, proj = state.rows.projects;
-    if (!road || !proj) return;
-    const projects = projectIndex();
-    const inflight = road.filter(r => r.Status === 'In Progress');
+    if (!state.data) return;
+    const apps = appById();
+    const inflight = openTickets().filter(t => t.status === 'In Progress');
     const per = new Map();
-    for (const r of inflight)
-      for (const id of parseRefs(r.Project)) {
-        const p = projects.get(id); if (p) per.set(p.name, (per.get(p.name) || 0) + 1);
-      }
+    for (const t of inflight) {
+      const name = t.app && apps.get(t.app) ? apps.get(t.app).name : 'Portfolio';
+      per.set(name, (per.get(name) || 0) + 1);
+    }
     const breakdown = [...per.entries()].sort((a, b) => b[1] - a[1])
-      .map(([n, c]) => `${c} ${shortName(n)}`).join(', ');
+      .map(([n, c]) => `${c} ${n}`).join(', ');
     $('sec-wip').hidden = false;
     const box = $('wip'); box.textContent = '';
     box.append(el('span', 'big', String(inflight.length)));
     const txt = el('span', 'txt');
-    txt.append(el('strong', null, `${inflight.length} items are marked In Progress at once`),
+    txt.append(el('strong', null, `${inflight.length} tickets are In Progress at once`),
       document.createTextNode((breakdown ? ` — ${breakdown}. ` : '. ') +
         (inflight.length > 10
           ? 'Everything is started, little is finishing. The rule this page enforces: clear the P0 lane before touching anything new.'
@@ -706,66 +673,20 @@
     box.append(txt);
   }
 
-  function renderHygiene(shipped) {
-    const road = state.rows.roadmap, proj = state.rows.projects, goals = state.rows.goals;
-    if (!road || !proj) return;
-    const projects = projectIndex();
-    const fixes = [];
-    const unnamed = road.filter(r => OPEN(r) && !r.Name);
-    const unnamedP0 = unnamed.filter(r => r.Priority === 'P0').length;
-    if (unnamed.length) fixes.push([`${unnamed.length} unnamed roadmap row${unnamed.length > 1 ? 's' : ''}${unnamedP0 ? `, ${unnamedP0} of them P0` : ''}`,
-      ' — an unnamed item can never be ranked. Name or delete them.']);
-    if (shipped && shipped.size)
-      fixes.push([`${shipped.size} open item${shipped.size > 1 ? 's' : ''} look${shipped.size > 1 ? '' : 's'} already shipped in GitHub`,
-        ' — see the Reality check section; verify and mark them Done so the queue reflects reality.']);
-    const activeByProj = new Map();
-    for (const r of road.filter(ACTIVE)) for (const id of parseRefs(r.Project)) activeByProj.set(id, (activeByProj.get(id) || 0) + 1);
-    const unlinked = [...activeByProj.entries()]
-      .map(([id, n]) => ({ p: projects.get(id), n }))
-      .filter(x => x.p && !x.p.repo && x.n >= 1);
-    if (unlinked.length)
-      fixes.push([`${unlinked.length} project${unlinked.length > 1 ? 's' : ''} with active work ha${unlinked.length > 1 ? 've' : 's'} no GitHub link in Notion`,
-        ` (${unlinked.sort((a, b) => b.n - a.n).map(x => shortName(x.p.name)).join(', ')}) — fill the GitHub property on their Projects rows so this page can verify real status.`]);
-    for (const [id, n] of activeByProj) {
-      const p = projects.get(id);
-      if (p && (!p.status || !p.priority) && n >= 3)
-        fixes.push([`${shortName(p.name)} has no ${!p.status && !p.priority ? 'Status or Priority' : !p.status ? 'Status' : 'Priority'} in Projects`,
-          ` despite carrying ${n} active items. Set it.`]);
-    }
-    for (const g of goals || []) {
-      if ((g.Status === 'Behind' || g.Status === 'At Risk') && g.Target && (g.Current || 0) >= g.Target)
-        fixes.push([`"${g.Name}" contradicts itself`, ` — ${g.Status} at ${fmtNum(g.Current || 0)}/${fmtNum(g.Target)}. Correct Current or the status.`]);
-    }
-    const untriaged = road.filter(r => OPEN(r) && r.Name && (!r.Status || !r.Priority)).length;
-    if (untriaged) fixes.push([`${untriaged} roadmap items have no Status or no Priority`, ' — they can never be ranked. Triage or archive them.']);
-
-    if (!fixes.length) return;
-    $('sec-hygiene').hidden = false;
-    const box = $('fixes'); box.textContent = '';
-    for (const [strong, rest] of fixes) {
-      const f = el('div', 'fix');
-      f.append(el('span', 'ico', '!'));
-      const s = el('span'); s.append(el('strong', null, strong), document.createTextNode(rest));
-      f.append(s); box.append(f);
-    }
-  }
-
   function renderAll() {
     renderStatus();
-    const projects = state.rows.projects ? projectIndex() : null;
-    if (projects) loadGithub(projects);
-    const shipped = projects ? computeShipped(projects) : new Map();
-    const queue = (state.rows.roadmap && projects) ? rankQueue(state.rows.roadmap, projects) : null;
+    if (!state.data) return;
+    loadGithub();
+    const shipped = computeShipped();
+    const queue = rankQueue();
     renderHero(queue, shipped);
     renderGoals();
+    renderApps();
     renderQueue(queue, shipped);
-    if (projects) renderGithub(projects, shipped);
-    if (projects) renderSplit(projects);
+    renderGithub(shipped);
     renderWip();
-    renderHygiene(shipped);
   }
 
-  // ---------- wiring ----------
   function loadAll() {
     if (!askKey(false)) {
       const banner = $('banner');
@@ -773,24 +694,13 @@
       banner.append(el('strong', null, 'Password required. '), document.createTextNode('Click Refresh to enter it.'));
       return;
     }
-    for (const source of ['projects', 'roadmap', 'goals']) {
-      api('/api/notion', { method: 'POST', body: JSON.stringify({ source }) })
-        .then(data => {
-          state.rows[source] = (data && data.results) || [];
-          state.err[source] = null;
-          state.meta[source] = { storedAt: Date.now() };
-          renderAll();
-        })
-        .catch(e => {
-          if (e.unauthorized) {
-            state.err[source] = 'Wrong password.';
-            localStorage.removeItem(KEY_STORE);
-          } else {
-            state.err[source] = e.message;
-          }
-          renderAll();
-        });
-    }
+    api('/api/data')
+      .then(data => { state.data = data; state.err = null; state.loadedAt = Date.now(); renderAll(); })
+      .catch(e => {
+        if (e.unauthorized) { state.err = 'Wrong password — click Refresh to try again.'; localStorage.removeItem(KEY_STORE); }
+        else state.err = e.message;
+        renderAll();
+      });
   }
 
   $('refresh').addEventListener('click', () => {

@@ -1,0 +1,90 @@
+{
+  "updated": "2026-07-23",
+  "updatedBy": "Claude — seeded from the Notion App Command Center pull of 2026-07-23",
+  "goals": [
+    {
+      "id": "revenue-100k",
+      "name": "$100K / month revenue",
+      "unit": "money",
+      "current": 40000,
+      "target": 100000,
+      "status": "At Risk",
+      "due": "2026-12-31",
+      "note": "$60K gap, 5 months left. Primary lever: subscription & monetization work."
+    },
+    {
+      "id": "ao3-dau",
+      "name": "AO3 → 30K daily active users",
+      "unit": "count",
+      "current": 17000,
+      "target": 30000,
+      "status": "On Track",
+      "due": "2026-12-31"
+    },
+    {
+      "id": "ss-downloads",
+      "name": "Second Strength → 1,000 downloads/day",
+      "unit": "count",
+      "current": 1000,
+      "target": 1000,
+      "status": "Behind",
+      "due": "2026-12-31",
+      "note": "Current equals target but status says Behind — needs a fresh number."
+    }
+  ],
+  "apps": [
+    { "id": "r-radio", "name": "R Radio", "platforms": ["Android"], "revenueMonthly": 18000, "status": "Active", "priority": "P2", "repo": null, "metrics": null },
+    { "id": "ao3", "name": "AO3 App", "platforms": ["iOS", "Android"], "revenueMonthly": 8500, "status": "Active", "priority": "P1", "repo": null, "metrics": null },
+    { "id": "bessy", "name": "Bessy", "platforms": ["iOS", "Android"], "revenueMonthly": 4000, "status": "Active", "priority": "P2", "repo": null, "metrics": null },
+    { "id": "calculator", "name": "Calculator", "platforms": ["iOS", "Android"], "revenueMonthly": 3500, "status": "Active", "priority": null, "repo": null, "metrics": null },
+    { "id": "russian-radio", "name": "Russian Radio", "platforms": ["iOS", "Android"], "revenueMonthly": 3000, "status": "Active", "priority": null, "repo": null, "metrics": null },
+    { "id": "ios-radio", "name": "iOS Radio Apps", "platforms": ["iOS"], "revenueMonthly": 3000, "status": "Active", "priority": "P1", "repo": null, "metrics": null },
+    { "id": "second-strength", "name": "Second Strength", "platforms": ["iOS"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": null, "metrics": null },
+    { "id": "ru-push", "name": "Russian Radio Push Automation", "platforms": ["iOS", "Android"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/radio_online", "metrics": null },
+    { "id": "lullaby", "name": "Lullaby TikTok Generator", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/lullaby-os", "metrics": null },
+    { "id": "ao3wiki", "name": "ao3wiki.com", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/ao3wiki", "metrics": null },
+    { "id": "tiktok-slideshow", "name": "TikTok Slideshow Generator", "platforms": ["CLI"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/TikTok-slideshow-generator-", "metrics": null },
+    { "id": "ma-dashboard", "name": "M&A Outreach Dashboard", "platforms": ["Web"], "revenueMonthly": 0, "status": "Active", "priority": null, "repo": "adubbbin22/M-A-dashboard-", "metrics": null },
+    { "id": "moneyprinter", "name": "MoneyPrinterV2", "platforms": ["CLI"], "revenueMonthly": 0, "status": "Paused", "priority": null, "repo": "adubbbin22/MoneyPrinterV2", "metrics": null },
+    { "id": "bandle", "name": "Bandle Clone", "platforms": ["Web", "iOS", "Android"], "revenueMonthly": 0, "status": "Paused", "priority": null, "repo": "adubbbin22/bandle_clone", "metrics": null }
+  ],
+  "tickets": [
+    { "id": "ss-healthkit-dates", "title": "Bug: HealthKit date filters silently ignored — yesterday-steps shows lifetime total (~260k)", "app": "second-strength", "priority": "P0", "status": "In Progress", "type": "Bug", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa5281fa9c8bfd69a442c827" },
+    { "id": "ao3-price-testing-ios", "title": "AO3 price testing (iOS)", "app": "ao3", "priority": "P0", "status": "In Progress", "type": "Improvement", "created": "2026-06-18", "url": "https://app.notion.com/383c5951aa5280ca8355e206585cd11c" },
+    { "id": "ss-revenuecat-identity", "title": "Web→app subscriptions: unify RevenueCat identity so a web trial unlocks the app", "app": "second-strength", "priority": "P0", "status": "In Progress", "type": "Feature", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa52810b9324cdfe4747757f" },
+    { "id": "ss-apple-health-r2", "title": "Apple Health round 2: HRV integration, sleep stages, workout close + numeral jump fix", "app": "second-strength", "priority": "P0", "status": "In Progress", "type": "Feature", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa52817da364df5c63c6b162" },
+    { "id": "ao3-store-screenshots", "title": "New App Store screenshots", "app": "ao3", "priority": "P0", "status": "ToDo", "type": "Improvement", "created": "2026-06-09", "url": "https://app.notion.com/37ac5951aa5280af8277e04ffe8756f7" },
+    { "id": "ao3-d1-instrumentation", "title": "Instrument onboarding tag selection + home feed (D1 no-open diagnosis)", "app": "ao3", "priority": "P0", "status": "ToDo", "type": "Improvement", "created": "2026-06-19", "url": "https://app.notion.com/384c5951aa5281ee9860d8be81365ab1" },
+    { "id": "ao3-store-metrics", "title": "Automate App Store metrics", "app": "ao3", "priority": "P0", "status": "ToDo", "type": "Tool", "created": "2026-06-18", "url": "https://app.notion.com/383c5951aa5280fcaab8d30acb060b8d" },
+
+    { "id": "radio-carplay", "title": "CarPlay entitlement application (USER ACTION) + audio app", "app": "ios-radio", "priority": "P1", "status": "ToDo", "type": "Feature", "created": "2026-07-20", "userAction": true, "url": "https://app.notion.com/3a3c5951aa528108a694dd2f9e28da40" },
+
+    { "id": "ss-scrub-inspect", "title": "Scrub-to-inspect on all health charts (metric posters + rhythm landscape)", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa528165a820e6fa21191553" },
+    { "id": "ss-sleep-decimal", "title": "Sleep as decimal hours + rhythm landscape 'you trained' fallback", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa528197a9c1d376d6721a77" },
+    { "id": "ss-box-breathing", "title": "Box Breathing screen from Claude Design handoff", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa5281d8971af99bb33dc3cf" },
+    { "id": "ss-health-turns-67", "title": "Apple Health turns 6+7: arrival/draw-in animations, Morning Note states, steps bars", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-22", "url": "https://app.notion.com/3a5c5951aa5281e68460c12aedd10c11" },
+    { "id": "ss-workout-catalog", "title": "Advanced workout catalog expansion (3 → ~15 advanced sessions)", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa528123b5c9c27ba72ba2a3" },
+    { "id": "ss-top-exercises", "title": "Top Exercises: honor the user's focus areas (rank + highlight)", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Bug", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa528160af6fc0b88e77c581" },
+    { "id": "ss-tabbar-plan-v2", "title": "Hide tab bar on health + breath screens; integrate Plan Screen v2 design", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa5281a1be17c5a3b4a6d24e" },
+    { "id": "ss-library-filter", "title": "Library: body-area filter (upper / lower / core / full / mobility …)", "app": "second-strength", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa5281eab2c0fb2d1f3e2dcd" },
+    { "id": "ss-qa-backlog", "title": "QA backlog from pre-ship audit (2026-07-22) — remaining P1/P2s", "app": "second-strength", "priority": "P1", "status": "ToDo", "type": "Bug", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa5281329527e7c22b7e53a5" },
+
+    { "id": "radio-genre-onboarding", "title": "First-launch onboarding: genre picker seeding Home", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-19", "url": "https://app.notion.com/3a2c5951aa5281149bbed430cdd7f207" },
+    { "id": "radio-stations-first", "title": "Stations-first Home: one tap to audio", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-19", "url": "https://app.notion.com/3a2c5951aa528144943bd63f12af82d2" },
+    { "id": "radio-alarm", "title": "Alarm (wake to radio) + re-engagement notifications", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-20", "url": "https://app.notion.com/3a3c5951aa5281639ffbf6203af13acb" },
+    { "id": "radio-song-history", "title": "Song history + Apple Music links", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-20", "url": "https://app.notion.com/3a3c5951aa52817087b3f8771184a3d5" },
+    { "id": "radio-tf-round1", "title": "TF feedback round 1: multi-screen onboarding, shortcut visibility, swipe categories", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-20", "url": "https://app.notion.com/3a3c5951aa528176bba6eafff22c473f" },
+    { "id": "radio-tf-round2", "title": "TF feedback round 2: paywall as final onboarding step + genre CTA overlap", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-20", "url": "https://app.notion.com/3a3c5951aa5281918554eb374a3d0e4a" },
+    { "id": "radio-category-cache", "title": "Instant category swipes: per-category cache + neighbor prefetch", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Improvement", "created": "2026-07-21", "url": "https://app.notion.com/3a4c5951aa52812f8023f24c5d112811" },
+    { "id": "radio-uk-themes", "title": "Premium color themes v1 — UK pack (Union / Racing Green / Royal)", "app": "ios-radio", "priority": "P1", "status": "In Progress", "type": "Feature", "created": "2026-07-21", "url": "https://app.notion.com/3a4c5951aa5281929837cdd0bd1eaae8" },
+
+    { "id": "lullaby-meta-ads", "title": "Meta Ads — Baby Tracker launch", "app": "lullaby", "priority": "P1", "status": "Backlog", "type": "Pipeline", "created": "2026-04-03", "url": "https://app.notion.com/337c5951aa52816899abda8590258d9c" },
+    { "id": "ao3-saved-search-nux", "title": "A/B test Saved Search NUX (timing, pre-fill, copy)", "app": "ao3", "priority": "P1", "status": "Backlog", "type": "Pipeline", "created": "2026-04-04", "url": "https://app.notion.com/338c5951aa52816fbf67f494d4b43bce" },
+    { "id": "ao3-save-prompt", "title": "A/B test Save Prompt (copy, timing, behavior)", "app": "ao3", "priority": "P1", "status": "Backlog", "type": "Pipeline", "created": "2026-04-04", "url": "https://app.notion.com/338c5951aa52817ab209d7d419382d3f" },
+    { "id": "portfolio-adspend-tracker", "title": "Ad Spend Profitability Tracker", "app": null, "priority": "P1", "status": "Backlog", "type": "Tool", "created": "2026-06-08", "url": "https://app.notion.com/379c5951aa528076906ec658f15f717e" },
+
+    { "id": "radio-podcast-chips", "title": "Podcast category chips (client-side classification)", "app": "ios-radio", "priority": "P2", "status": "In Progress", "type": "Feature", "created": "2026-07-20", "url": "https://app.notion.com/3a3c5951aa5281cb9368e57130c33ec4" },
+    { "id": "radio-alarm-surface", "title": "Surface the alarm: Home pill + player-row shortcut", "app": "ios-radio", "priority": "P2", "status": "In Progress", "type": "Improvement", "created": "2026-07-21", "url": "https://app.notion.com/3a4c5951aa5281ad8579cc6f08b34d09" },
+    { "id": "ss-sleep-poster-link", "title": "Sleep poster → rhythm landscape discoverability link", "app": "second-strength", "priority": "P2", "status": "In Progress", "type": "Improvement", "created": "2026-07-23", "url": "https://app.notion.com/3a6c5951aa52812f9725c23d1db52485" }
+  ]
+}

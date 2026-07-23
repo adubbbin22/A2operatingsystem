@@ -1,63 +1,67 @@
-# A2 Focus — standalone website
+# A2 Everything Dashboard
 
-The focus dashboard as a real website on Cloudflare Pages (same host as ao3wiki).
-A static page + two tiny Pages Functions that read Notion and GitHub **server-side**,
-so your tokens never reach the browser. The page is password-protected.
+One website for the whole operation: **goals, every app, and the ranked ticket queue** —
+with GitHub commit verification, and metric slots ready for Firebase / BigQuery.
+
+**Data model:** no external task tool. `data/portfolio.json` is the source of truth and
+**Claude maintains it** — tell Claude in this repo to add/close/reprioritize tickets, update
+goal numbers, or add an app; it edits the JSON and pushes. (Notion integration is paused;
+its IDs are preserved in `.claude/skills/focus/SKILL.md` if you ever want it back.)
 
 ```
 focus-site/
 ├── wrangler.toml            # Pages config (project "a2-focus", serves public/)
+├── data/portfolio.json      # goals + apps + tickets — Claude-edited, git-versioned
 ├── public/index.html        # the dashboard (no secrets in it)
 └── functions/api/
-    ├── notion.js            # POST /api/notion   {source: projects|roadmap|goals}
-    ├── github.js            # GET  /api/github?repo=owner/name&since=YYYY-MM-DD
+    ├── data.js              # GET /api/data    (serves portfolio.json, password-gated)
+    ├── github.js            # GET /api/github?repo=owner/name&since=…
     └── _utils.js            # shared auth + json helpers
 ```
 
-## One-time setup (~10 min)
+## Deploy (~5 min)
 
-### 1. Notion token
-1. notion.so → Settings → Connections → *Develop or manage integrations* → **New internal integration**
-   (workspace: "a2 apps's Notion"). Copy the secret (`ntn_…`).
-2. Open the **App Command Center** page → `⋯` → *Connections* → add your integration.
-   (That grants access to Projects, Roadmap, and Goals — all children of that page.)
-
-### 2. GitHub token
-GitHub → Settings → Developer settings → **Fine-grained personal access token**:
-- Repository access: the repos linked on your Notion Projects rows (or all your repos).
-- Permissions: **Contents: Read-only** and **Metadata: Read-only**. Nothing else.
-
-### 3. Deploy
 ```sh
 cd focus-site
 npx wrangler login
 npx wrangler pages project create a2-focus
 npx wrangler pages deploy
-npx wrangler pages secret put NOTION_TOKEN  --project-name a2-focus   # paste ntn_…
-npx wrangler pages secret put GITHUB_TOKEN  --project-name a2-focus   # paste github_pat_…
 npx wrangler pages secret put DASH_PASSWORD --project-name a2-focus   # pick a password
+npx wrangler pages secret put GITHUB_TOKEN  --project-name a2-focus   # optional, see below
 ```
 
-Open `https://a2-focus.pages.dev`, enter the password once (it's remembered per browser).
+Open `https://a2-focus.pages.dev`, enter the password once.
 
-## Redeploying after changes
-```sh
-cd focus-site && npx wrangler pages deploy
-```
+- `GITHUB_TOKEN` (optional but recommended): a fine-grained PAT with **Contents: Read-only**
+  + **Metadata: Read-only** on your repos. Powers the "Reality check" section and the
+  ✓ shipped? badges. Without it that section shows an error and everything else still works.
 
-## Troubleshooting
-- **401 / password prompt loops** — wrong `DASH_PASSWORD`; re-enter it (the page forgets a
-  rejected password) or reset the secret.
-- **"Notion 404"** — the integration isn't connected to the App Command Center page (step 1.2).
-- **"Notion 400 … data_sources"** — your workspace may still be on an older API surface;
-  check that the integration was created recently and retry.
-- **GitHub rows say "GitHub 404"** — the fine-grained token doesn't cover that repo.
-- **A project is missing from the Reality check** — its Notion Projects row has no GitHub URL.
-  Fill the `GitHub` property; the section picks it up on the next refresh.
+**Recommended:** connect the Pages project to this GitHub repo (Cloudflare dashboard →
+Pages → a2-focus → Settings → Builds; root directory `focus-site`, no build command,
+output `public`). Then every push — including Claude's ticket updates — redeploys the
+site automatically. Until then, redeploy manually with `npx wrangler pages deploy`.
+
+## Updating the dashboard
+
+Say it to Claude in this repo, in plain language:
+- "close ss-healthkit-dates" / "mark the HealthKit bug done"
+- "add a P0 ticket to AO3: …"
+- "set R Radio revenue to $19K" / "update the goals"
+- "link AO3 to repo adubbbin22/…"  ← repos make the reality check + shipped? badges work
+
+Claude edits `data/portfolio.json`, commits, pushes → site updates.
+
+## Next phase: Firebase / BigQuery metrics
+
+Each app has a `metrics` field (currently `null`) rendered as tiles (Installs 7d, DAU,
+Revenue 7d). The plan: connect a Firebase / BigQuery MCP in a Claude session, have Claude
+pull per-app numbers and write them into `metrics` (e.g.
+`{"installs": 1240, "dau": 8300, "revenue7d": "$2.1K", "asOf": "2026-07-23"}`), push, done —
+the tiles light up. No dashboard changes needed for the first version; a `metrics-history/`
+file can come later for sparklines.
 
 ## Security notes
-- Tokens live only as Cloudflare secrets; the browser only ever sees dashboard JSON.
-- The password gate is a shared secret — fine for personal use. If you want real auth,
-  put Cloudflare Access in front of the Pages project and delete the password check
-  in `functions/api/_utils.js`.
-- Both endpoints are read-only; the site never writes to Notion or GitHub.
+- The page and its data sit behind the `DASH_PASSWORD` shared secret; tokens live only as
+  Cloudflare secrets. For stronger auth put Cloudflare Access in front and delete the
+  password check in `functions/api/_utils.js`.
+- Everything is read-only; the site never writes to GitHub or anywhere else.

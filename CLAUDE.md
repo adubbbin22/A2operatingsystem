@@ -13,10 +13,10 @@ Read `PLAN.md` for the full architecture and phases. This file is your standing 
 - `creatives/briefs/` — ad briefs (input). `creatives/generated/` — nano-banana output. `creatives/uploaded/` — what shipped, with IDs.
 - `dashboards/` — generated performance reports. `dashboards/focus/` — daily priority dashboards from Notion.
 - `.claude/skills/` — the repeatable workflows.
-- **Notion is the task/roadmap source of truth** — the App Command Center page
-  (`337c5951-aa52-81c2-a1f1-fef4e17ca29d`) holds the Projects, Roadmap, Goals, and Epics
-  databases (IDs in `.claude/skills/focus/SKILL.md`). This repo's `apps/*/roadmap.md` files
-  are summaries; when they disagree, Notion wins.
+- **`focus-site/data/portfolio.json` is the goals/apps/tickets source of truth** — Claude
+  maintains it (add/close/update tickets on request, then commit + push; the everything
+  dashboard website in `focus-site/` renders it). Notion integration is paused; its IDs
+  live in `.claude/skills/focus/SKILL.md` if it comes back.
 
 ## MCP tools you have (see `.mcp.json`)
 - **nano-banana** — generate/edit ad images (Gemini image model).
